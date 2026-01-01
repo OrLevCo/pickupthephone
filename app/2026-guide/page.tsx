@@ -43,6 +43,8 @@ export default function Home() {
     'I can\'t believe this is free - pickupthephone.club/2026-guide',
   ];
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [textAnimationState, setTextAnimationState] = useState<'idle' | 'fadeOut' | 'fadeIn'>('idle');
+  const [isArrowSpinning, setIsArrowSpinning] = useState(false);
 
   const handleFirstInteraction = () => {
     setHasInteracted(true);
@@ -115,12 +117,31 @@ export default function Home() {
   };
 
   const handleChangeText = () => {
-    // Randomly select a different text variation
-    let newIndex;
-    do {
-      newIndex = Math.floor(Math.random() * textVariations.length);
-    } while (newIndex === currentTextIndex && textVariations.length > 1);
-    setCurrentTextIndex(newIndex);
+    // Reset arrow spin state to retrigger animation
+    setIsArrowSpinning(false);
+    // Use requestAnimationFrame to ensure state update happens before adding class
+    requestAnimationFrame(() => {
+      setIsArrowSpinning(true);
+      setTimeout(() => setIsArrowSpinning(false), 500);
+    });
+    
+    // Trigger fade out animation
+    setTextAnimationState('fadeOut');
+    
+    // After fade out, change text and fade in
+    setTimeout(() => {
+      // Cycle through text variations in sequence
+      const newIndex = (currentTextIndex + 1) % textVariations.length;
+      setCurrentTextIndex(newIndex);
+      
+      // Trigger fade in animation
+      setTextAnimationState('fadeIn');
+      
+      // Reset to idle after animation completes
+      setTimeout(() => {
+        setTextAnimationState('idle');
+      }, 200);
+    }, 150);
   };
 
   useEffect(() => {
@@ -347,7 +368,7 @@ export default function Home() {
         {/* Share It Section */}
         <div className="mt-12 sm:mt-20 pt-8 sm:pt-12">
           <div className="bg-stone-900 border border-stone-800 p-6 sm:p-14 rounded-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Left Column */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
@@ -363,10 +384,19 @@ export default function Home() {
                     readOnly
                     value={textVariations[currentTextIndex]}
                     onClick={handleCopy}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-black text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
                     rows={5}
                     aria-label="Message to copy"
                   />
+                  <div 
+                    className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-black text-xs sm:text-sm font-medium whitespace-pre-wrap ${
+                      textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
+                      textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
+                    }`}
+                    style={{ minHeight: 'fit-content' }}
+                  >
+                    {textVariations[currentTextIndex]}
+                  </div>
                   <button
                     onClick={handleCopy}
                     className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-black/60 hover:text-black transition-colors pointer-events-none"
@@ -386,7 +416,7 @@ export default function Home() {
                       background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
                     }}
                   >
-                    {copied ? 'Copied!' : 'Copy text'}
+                    {copied ? <span className="copied-text">Copied!</span> : 'Copy text'}
                   </button>
                   <button
                     type="button"
@@ -394,7 +424,12 @@ export default function Home() {
                     className="w-[44px] sm:w-[52px] h-[42px] sm:h-[48px] flex items-center justify-center text-white/50 hover:text-white/70 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-all rounded-sm cursor-pointer"
                     aria-label="Change text variation"
                   >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg 
+                      className={`w-4 h-4 sm:w-5 sm:h-5 ${isArrowSpinning ? 'arrow-spin' : ''}`}
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </button>
@@ -564,10 +599,19 @@ export default function Home() {
                           readOnly
                           value={textVariations[currentTextIndex]}
                           onClick={handleCopy}
-                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-black text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
                           rows={5}
                           aria-label="Message to copy"
                         />
+                        <div 
+                          className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-black text-xs sm:text-sm font-medium whitespace-pre-wrap ${
+                            textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
+                            textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
+                          }`}
+                          style={{ minHeight: 'fit-content' }}
+                        >
+                          {textVariations[currentTextIndex]}
+                        </div>
                         <button
                           onClick={handleCopy}
                           className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-black/60 hover:text-black transition-colors"
@@ -587,7 +631,7 @@ export default function Home() {
                             background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
                           }}
                         >
-                          {copied ? 'Copied!' : 'Copy text'}
+                          {copied ? <span className="copied-text">Copied!</span> : 'Copy text'}
                         </button>
                         <button
                           type="button"
@@ -595,7 +639,12 @@ export default function Home() {
                           className="w-[44px] sm:w-[52px] h-[42px] sm:h-[48px] flex items-center justify-center text-black/50 hover:text-black/70 hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-all rounded-sm cursor-pointer"
                           aria-label="Change text variation"
                         >
-                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg 
+                            className={`w-4 h-4 sm:w-5 sm:h-5 ${isArrowSpinning ? 'arrow-spin' : ''}`}
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                           </svg>
                         </button>
