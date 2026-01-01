@@ -366,7 +366,7 @@ export default function Home() {
         <p className="text-center text-xs text-white/50 py-3 sm:py-4">2026Ⓒ <a href="https://www.trophy.inc" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline transition-all duration-[250ms]">Trophy</a></p>
 
         {/* Share It Section */}
-        <div className="mt-12 sm:mt-20 pt-8 sm:pt-12">
+        <div className="mt-6 sm:mt-10 pt-4 sm:pt-6">
           <div className="bg-stone-900 border border-stone-800 p-6 sm:p-14 rounded-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Left Column */}
@@ -546,11 +546,11 @@ export default function Home() {
               <h3 className="text-lg sm:text-2xl font-bold text-black mb-0.5" style={{ letterSpacing: '-0.5px' }}>
                 Doesn't matter,
               </h3>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black mb-3 sm:mb-4 leading-tight" style={{ letterSpacing: '-1px' }}>
-                Pick Up The Phone.
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black mb-3 sm:mb-4 leading-tight" style={{ letterSpacing: '-2.6px' }}>
+                Pick up the phone.
               </h2>
               <p className="text-sm sm:text-base text-black/70 mb-2 font-medium">
-                No AI is going to save you. Start dialing.
+                No AI is going to save you. Start dialing. 📞
               </p>
             </div>
             
