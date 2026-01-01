@@ -199,8 +199,8 @@ export default function Home() {
             <p className="text-black/60 text-center text-[10px] sm:text-xs mb-2 font-bold uppercase">
               Pick Up the Phone Club™️ Presents
             </p>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4" style={{ 
-              letterSpacing: '-1.5px', 
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4 heading-responsive-main" style={{ 
+              letterSpacing: '-1.875px',
               lineHeight: '1.3',
               background: 'linear-gradient(to bottom, #333333 0%, #000000 100%)',
               WebkitBackgroundClip: 'text',
@@ -371,7 +371,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             {/* Left Column */}
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 heading-responsive-sub" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
               <p className="text-white/80 text-xs sm:text-sm font-medium">
                 Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
               </p>
@@ -384,22 +384,28 @@ export default function Home() {
                     readOnly
                     value={textVariations[currentTextIndex]}
                     onClick={handleCopy}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
-                    rows={5}
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-white/20 bg-stone-800 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-white/40 transition-colors"
+                    style={{
+                      borderRadius: '20px 20px 20px 4px'
+                    }}
+                    rows={3}
                     aria-label="Message to copy"
                   />
                   <div 
-                    className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-black text-xs sm:text-sm font-medium whitespace-pre-wrap ${
+                    className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-white/90 text-xs sm:text-sm font-medium whitespace-pre-wrap ${
                       textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
                       textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
                     }`}
-                    style={{ minHeight: 'fit-content' }}
+                    style={{ 
+                      minHeight: 'fit-content',
+                      borderRadius: '20px 20px 20px 4px'
+                    }}
                   >
                     {textVariations[currentTextIndex]}
                   </div>
                   <button
                     onClick={handleCopy}
-                    className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-black/60 hover:text-black transition-colors pointer-events-none"
+                    className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-white/60 hover:text-white transition-colors pointer-events-none"
                     aria-label="Copy"
                   >
                     <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -416,7 +422,7 @@ export default function Home() {
                       background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
                     }}
                   >
-                    {copied ? <span className="copied-text">Copied!</span> : 'Copy text'}
+                    {copied ? <span className="copied-text">Copied!</span> : 'Copy message'}
                   </button>
                   <button
                     type="button"
@@ -430,7 +436,7 @@ export default function Home() {
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582a8.001 8.001 0 1015.356 2m-15.356-2H9m11 11v-5h-.582a8.001 8.001 0 01-15.356-2m15.356 2H15" />
                     </svg>
                   </button>
                 </div>
@@ -543,10 +549,10 @@ export default function Home() {
               </svg>
             </button>
             <div className="text-center mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-black/10">
-              <h3 className="text-lg sm:text-2xl font-bold text-black mb-0.5" style={{ letterSpacing: '-0.5px' }}>
+              <h3 className="text-lg sm:text-2xl font-bold text-black mb-0.5 heading-responsive-h3" style={{ letterSpacing: '-0.5px' }}>
                 Doesn't matter,
               </h3>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black mb-3 sm:mb-4 leading-tight" style={{ letterSpacing: '-2.6px' }}>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-black mb-3 sm:mb-4 leading-tight heading-responsive-large" style={{ letterSpacing: '-2.5px' }}>
                 Pick up the phone.
               </h2>
               <p className="text-sm sm:text-base text-black/70 mb-2 font-medium">
@@ -586,7 +592,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
                   {/* Left Column */}
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-3" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-3 heading-responsive-sub-popup" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
                     <p className="text-black/60 text-xs sm:text-sm font-medium">
                       Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
                     </p>
@@ -599,8 +605,11 @@ export default function Home() {
                           readOnly
                           value={textVariations[currentTextIndex]}
                           onClick={handleCopy}
-                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
-                          rows={5}
+                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                          style={{
+                            borderRadius: '20px 20px 20px 4px'
+                          }}
+                          rows={3}
                           aria-label="Message to copy"
                         />
                         <div 
@@ -608,7 +617,10 @@ export default function Home() {
                             textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
                             textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
                           }`}
-                          style={{ minHeight: 'fit-content' }}
+                          style={{ 
+                            minHeight: 'fit-content',
+                            borderRadius: '20px 20px 20px 4px'
+                          }}
                         >
                           {textVariations[currentTextIndex]}
                         </div>
@@ -631,7 +643,7 @@ export default function Home() {
                             background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
                           }}
                         >
-                          {copied ? <span className="copied-text">Copied!</span> : 'Copy text'}
+                          {copied ? <span className="copied-text">Copied!</span> : 'Copy message'}
                         </button>
                         <button
                           type="button"
@@ -645,7 +657,7 @@ export default function Home() {
                             stroke="currentColor" 
                             viewBox="0 0 24 24"
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582a8.001 8.001 0 1015.356 2m-15.356-2H9m11 11v-5h-.582a8.001 8.001 0 01-15.356-2m15.356 2H15" />
                           </svg>
                         </button>
                       </div>

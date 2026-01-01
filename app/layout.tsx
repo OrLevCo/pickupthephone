@@ -12,21 +12,25 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ultimate 2026 CRE Guide",
     description: "Get free AI-powered CRE coaching in seconds",
+    url: "https://pickupthephone.club",
+    siteName: "Pick Up the Phone Club",
     images: [
       {
-        url: "/PUTP Opengraph 01.png",
+        url: "/putp-opengraph-01.png",
         width: 1200,
         height: 630,
         alt: "Ultimate 2026 CRE Guide",
+        type: "image/png",
       },
     ],
     type: "website",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ultimate 2026 CRE Guide",
     description: "Get free AI-powered CRE coaching in seconds",
-    images: ["/PUTP Opengraph 01.png"],
+    images: ["/putp-opengraph-01.png"],
   },
 };
 

@@ -238,12 +238,60 @@ input[type="range"].slider::-moz-range-thumb {
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
 
 .arrow-spin {
   animation: arrowSpin 0.5s ease-out;
+}
+
+/* Responsive Letter Spacing for Headings */
+/* Main h1: text-3xl(30px:-1.875px) -> sm:text-4xl(36px) -> lg:text-5xl(48px) */
+@media (min-width: 640px) {
+  .heading-responsive-main {
+    letter-spacing: -2.25px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-responsive-main {
+    letter-spacing: -3px !important;
+  }
+}
+
+/* h2 "Give your people": text-2xl(24px:-0.5px) -> sm:text-3xl(30px) */
+@media (min-width: 640px) {
+  .heading-responsive-sub {
+    letter-spacing: -0.625px !important;
+  }
+}
+
+/* h2 "Give your people" in popup: text-xl(20px:-0.5px) -> sm:text-2xl(24px) */
+@media (min-width: 640px) {
+  .heading-responsive-sub-popup {
+    letter-spacing: -0.6px !important;
+  }
+}
+
+/* h3 "Doesn't matter": text-lg(18px:-0.5px) -> sm:text-2xl(24px) */
+@media (min-width: 640px) {
+  .heading-responsive-h3 {
+    letter-spacing: -0.667px !important;
+  }
+}
+
+/* h2 "Pick up the phone": text-4xl(36px:-3.12px) -> sm:text-5xl(48px) -> lg:text-6xl(54px) */
+@media (min-width: 640px) {
+  .heading-responsive-large {
+    letter-spacing: -4.16px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-responsive-large {
+    letter-spacing: -4.68px !important;
+  }
 }
 
 /* Mobile Touch Optimizations */
