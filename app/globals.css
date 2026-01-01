@@ -147,7 +147,7 @@ input[type="range"].slider::-moz-range-thumb {
 }
 
 .animate-slide-in-bounce {
-  animation: slideInBounce 0.3s ease-out;
+  animation: slideInBounce 0.6s ease-out;
 }
 
 .animate-slide-out-bounce {
@@ -155,7 +155,7 @@ input[type="range"].slider::-moz-range-thumb {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.2s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .animate-fade-out {
@@ -291,6 +291,17 @@ input[type="range"].slider::-moz-range-thumb {
 @media (min-width: 1024px) {
   .heading-responsive-large {
     letter-spacing: -4.68px !important;
+  }
+}
+
+/* Popup Text Line Break */
+.popup-text-first-line {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .popup-text-first-line {
+    display: inline;
   }
 }
 

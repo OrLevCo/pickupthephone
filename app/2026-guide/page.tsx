@@ -264,7 +264,7 @@ export default function Home() {
 
             {/* Question 3 - Experience */}
             <div className="space-y-2">
-              <h3 className="text-lg sm:text-xl font-semibold text-black">How many years have you been in the business?</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-black">How long have you been in the business?</h3>
               <div>
                 <div className="flex items-center gap-2 sm:gap-4">
                   <span className="text-[10px] sm:text-xs text-black/60 font-medium">&lt;1 year</span>
@@ -306,7 +306,7 @@ export default function Home() {
 
             {/* Question 5 - Call Volume */}
             <div className="space-y-2">
-              <h3 className="text-lg sm:text-xl font-semibold text-black">How many cold calls did you make last week?</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-black">How many calls did you make last week?</h3>
               <div>
                 <div className="flex items-center gap-2 sm:gap-4">
                   <span className="text-[10px] sm:text-xs text-black/60 font-medium">0</span>
@@ -332,6 +332,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            <div className="border-t border-black/10 mt-6 sm:mt-8 mb-2 sm:mb-3"></div>
 
             <div className="pt-3 sm:pt-4">
               <button
@@ -557,7 +559,7 @@ export default function Home() {
                 Pick up the phone.
               </h2>
               <p className="text-sm sm:text-base text-black/70 mb-2 font-medium">
-                No AI is going to save you. Start dialing. 📞
+                <span className="popup-text-first-line">The best way forward in this business is to talk to people.</span> No AI is going to save you. Just start dialing. 📞
               </p>
             </div>
             
