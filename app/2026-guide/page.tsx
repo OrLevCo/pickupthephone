@@ -207,7 +207,7 @@ export default function Home() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              The Ultimate Guide for<br />Success in CRE in 2026
+              The Ultimate Guide for<br />CRE Success in 2026
             </h1>
             <p className="text-black/70 text-center text-sm sm:text-base mb-0 font-medium">
               Get free AI-powered CRE coaching in seconds
