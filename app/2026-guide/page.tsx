@@ -32,7 +32,7 @@ export default function Home() {
 
   const textVariations = [
     'You have to check out this guide: pickupthephone.club/2026-guide',
-    'Have you heard of this new CRE club?: pickupthephone.club',
+    'Have you heard of this new CRE club? pickupthephone.club',
     'duuuude check this out: pickupthephone.club/2026-guide',
     'ive been telling you its time to step up your game... try this: pickupthephone.club/2026-guide',
     'go to pickupthephone.club/2026-guide now',
@@ -200,7 +200,7 @@ export default function Home() {
               Pick Up the Phone Club™️ Presents
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4" style={{ 
-              letterSpacing: '-1px', 
+              letterSpacing: '-1.5px', 
               lineHeight: '1.3',
               background: 'linear-gradient(to bottom, #333333 0%, #000000 100%)',
               WebkitBackgroundClip: 'text',
@@ -337,7 +337,7 @@ export default function Home() {
               <button
                 type="submit"
                 data-tooltip-id="submit-tooltip"
-                data-tooltip-content="Fill the form first. No Cheating :)"
+                data-tooltip-content="Fill the form first."
                 className="w-full px-6 sm:px-8 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity text-[12px] sm:text-[13px] uppercase tracking-wide cursor-not-allowed rounded-sm"
                 style={{
                   background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
@@ -368,12 +368,12 @@ export default function Home() {
         {/* Share It Section */}
         <div className="mt-6 sm:mt-10 pt-4 sm:pt-6">
           <div className="bg-stone-900 border border-stone-800 p-6 sm:p-14 rounded-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             {/* Left Column */}
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
-              <p className="text-white/80 text-sm sm:text-base font-medium">
-                Drop this in your team chat or share with colleagues. 🔥
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
+              <p className="text-white/80 text-xs sm:text-sm font-medium">
+                Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
               </p>
             </div>
             {/* Right Column */}
@@ -530,7 +530,7 @@ export default function Home() {
           onClick={handleClosePopup}
         >
           <div 
-            className={`bg-white max-w-4xl w-full pt-8 sm:pt-16 px-5 sm:px-10 pb-3 sm:pb-5 relative rounded-sm max-h-[90vh] overflow-y-auto ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
+            className={`bg-white max-w-3xl w-full pt-8 sm:pt-16 px-5 sm:px-10 pb-3 sm:pb-5 relative rounded-sm max-h-[90vh] overflow-y-auto ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -583,12 +583,12 @@ export default function Home() {
               }`}
             >
               <div className="mb-0 pt-4 sm:pt-6 pb-4 sm:pb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
                   {/* Left Column */}
                   <div>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-black mb-2 sm:mb-3" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-3" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
                     <p className="text-black/60 text-xs sm:text-sm font-medium">
-                      Drop this in your team chat or share with colleagues. 🔥
+                      Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
                     </p>
                   </div>
                   {/* Right Column */}
