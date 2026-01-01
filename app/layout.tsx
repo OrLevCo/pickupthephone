@@ -3,24 +3,28 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pickupthephone.club'),
-  title: "The Ultimate Guide for Success in CRE in 2026 | Pick Up the Phone Club",
+  title: "Ultimate 2026 CRE Guide",
   description: "Get free AI-powered CRE coaching in seconds",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/50f8083a78cd080bcb85eeeb16a12de2.ico/apple-icon.png',
+  },
   openGraph: {
-    title: "The Ultimate Guide for Success in CRE in 2026",
+    title: "Ultimate 2026 CRE Guide",
     description: "Get free AI-powered CRE coaching in seconds",
     images: [
       {
         url: "/PUTP Opengraph 01.png",
         width: 1200,
         height: 630,
-        alt: "The Ultimate Guide for Success in CRE in 2026",
+        alt: "Ultimate 2026 CRE Guide",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Ultimate Guide for Success in CRE in 2026",
+    title: "Ultimate 2026 CRE Guide",
     description: "Get free AI-powered CRE coaching in seconds",
     images: ["/PUTP Opengraph 01.png"],
   },
@@ -34,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap"

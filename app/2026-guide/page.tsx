@@ -186,7 +186,7 @@ export default function Home() {
       <main className="max-w-[1000px] mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-24 pb-6 sm:pb-12 flex-1 relative z-10">
         {/* Quiz Form */}
         <div 
-          className={`border border-stone-800 bg-white max-w-[600px] mx-auto rounded-sm overflow-hidden ${isMounted ? 'animate-slide-in-bottom' : ''}`}
+          className={`border border-stone-800 bg-white max-w-[600px] mx-auto rounded-md overflow-hidden ${isMounted ? 'animate-slide-in-bottom' : ''}`}
           style={!isMounted ? { transform: 'translateY(40px)', opacity: 0 } : undefined}
         >
           {/* Header Section with Yellow Background */}
