@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "Pick Up the Phone Club",
     images: [
       {
-        url: "/putp-opengraph-01.png",
+        url: "https://pickupthephone.club/putp-opengraph-01.png",
         width: 1200,
         height: 630,
         alt: "Ultimate 2026 CRE Guide",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ultimate 2026 CRE Guide",
     description: "Get free AI-powered CRE coaching in seconds",
-    images: ["/putp-opengraph-01.png"],
+    images: ["https://pickupthephone.club/putp-opengraph-01.png"],
   },
 };
 
