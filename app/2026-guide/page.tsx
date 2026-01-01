@@ -21,6 +21,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [showShareDropdown, setShowShareDropdown] = useState(false);
   const [formData, setFormData] = useState({
     q1: '',
     q2: '',
@@ -28,6 +29,18 @@ export default function Home() {
     q4: '',
     q5: '',
   });
+
+  const textVariations = [
+    'You have to check out this guide: pickupthephone.club/2026-guide',
+    'Have you heard of this new CRE club?: pickupthephone.club',
+    'duuuude check this out: pickupthephone.club/2026-guide',
+    'ive been telling you its time to step up your game... try this: pickupthephone.club/2026-guide',
+    'go to pickupthephone.club/2026-guide now',
+    'AI is coming for all of us: pickupthephone.club/2026-guide',
+    'CRE is about to change: pickupthephone.club/2026-guide',
+    'got a minute? pickupthephone.club/2026-guide',
+  ];
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
   const handleFirstInteraction = () => {
     setHasInteracted(true);
@@ -93,10 +106,19 @@ export default function Home() {
   };
 
   const handleCopy = () => {
-    const text = 'You have to check out this guide: pickupthephone.club/2026-guide';
+    const text = textVariations[currentTextIndex];
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleChangeText = () => {
+    // Randomly select a different text variation
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * textVariations.length);
+    } while (newIndex === currentTextIndex && textVariations.length > 1);
+    setCurrentTextIndex(newIndex);
   };
 
   useEffect(() => {
@@ -138,7 +160,7 @@ export default function Home() {
         }}
       />
       {/* Main Content */}
-      <main className="max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 pb-8 sm:pb-12 flex-1 relative z-10">
+      <main className="max-w-[1000px] mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-24 pb-6 sm:pb-12 flex-1 relative z-10">
         {/* Quiz Form */}
         <div 
           className={`border border-stone-800 bg-white max-w-[600px] mx-auto rounded-sm overflow-hidden ${isMounted ? 'animate-slide-in-bottom' : ''}`}
@@ -146,16 +168,16 @@ export default function Home() {
         >
           {/* Header Section with Yellow Background */}
           <div 
-            className="p-8 sm:p-10 pb-6 border-b border-black/10"
+            className="p-5 sm:p-10 pb-4 sm:pb-6 border-b border-black/10"
             style={{
               background: 'radial-gradient(circle at top center, #FFEEC3 0%, #FED97D 27%, #FAB300 68%, #DFA000 100%)'
             }}
           >
-            <p className="text-black/70 text-center text-sm mb-2 font-medium">
+            <p className="text-black/70 text-center text-xs sm:text-sm mb-2 font-medium">
               Pick Up the Phone Club™️ Presents
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4" style={{ 
-              letterSpacing: '-2px', 
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4" style={{ 
+              letterSpacing: '-1px', 
               lineHeight: '1.3',
               background: 'linear-gradient(to bottom, #333333 0%, #000000 100%)',
               WebkitBackgroundClip: 'text',
@@ -164,11 +186,11 @@ export default function Home() {
             }}>
               The Ultimate Guide for<br />Success in CRE in 2026
             </h1>
-            <p className="text-black/70 text-center text-base mb-0 font-medium">
+            <p className="text-black/70 text-center text-sm sm:text-base mb-0 font-medium">
               Get custom AI-based CRE coaching in seconds
             </p>
           </div>
-          <div className="p-8 sm:p-10 pt-6">
+          <div className="p-5 sm:p-10 pt-4 sm:pt-6">
           {/* Progress Bar - HIDDEN */}
           {/* <div className="mb-4 flex items-center gap-2">
             <span className="text-black/60 text-xs font-medium">0/5 questions</span>
@@ -176,22 +198,22 @@ export default function Home() {
               <div className="h-full bg-black/20" style={{ width: '0%' }}></div>
             </div>
           </div> */}
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* Question 1 - Asset Class */}
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-black">Which asset class do you focus on?</h3>
-              <div className="flex flex-wrap gap-4 pl-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-black">Which asset class do you focus on?</h3>
+              <div className="flex flex-wrap gap-x-3 sm:gap-x-4 gap-y-2.5 sm:gap-y-2">
                 {['Office', 'Retail', 'Multifamily', 'Industrial', 'Land', 'Mixed‑Use'].map((option) => (
-                  <label key={option} className="flex items-center space-x-1 cursor-pointer group">
+                  <label key={option} className="flex items-center space-x-1.5 sm:space-x-1 cursor-pointer group py-1 sm:py-0">
                     <input
                       type="radio"
                       name="q1"
                       value={option}
                       checked={formData.q1 === option}
                       onChange={(e) => handleRadioChange('q1', e.target.value)}
-                      className="w-3 h-3 text-[#FAB300] border-black/20 focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 cursor-pointer"
+                      className="w-4 h-4 sm:w-3 sm:h-3 text-[#FAB300] border-black/20 focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 cursor-pointer"
                     />
-                    <span className="text-black group-hover:text-black/80 transition-colors text-[13px] font-medium">{option}</span>
+                    <span className="text-black group-hover:text-black/80 transition-colors text-xs sm:text-[13px] font-medium">{option}</span>
                   </label>
                 ))}
               </div>
@@ -200,7 +222,7 @@ export default function Home() {
             {/* Question 2 - Your Role - HIDDEN */}
             {/* <div className="space-y-2">
               <h3 className="text-xl font-semibold text-black">What is your role?</h3>
-              <div className="flex flex-wrap gap-4 pl-2">
+              <div className="flex flex-wrap gap-x-4 gap-y-2">
                 {['Broker', 'Investor', 'Leasing', 'Other'].map((option) => (
                   <label key={option} className="flex items-center space-x-1 cursor-pointer group">
                     <input
@@ -219,10 +241,10 @@ export default function Home() {
 
             {/* Question 3 - Experience */}
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-black">How many years have you been in the business?</h3>
-              <div className="pl-2">
-                <div className="flex items-center gap-4">
-                  <span className="text-xs text-black/60 font-medium">&lt;1 year</span>
+              <h3 className="text-lg sm:text-xl font-semibold text-black">How many years have you been in the business?</h3>
+              <div>
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <span className="text-[10px] sm:text-xs text-black/60 font-medium">&lt;1 year</span>
                   <input
                     type="range"
                     min="0"
@@ -240,17 +262,17 @@ export default function Home() {
                       background: `linear-gradient(to right, #FAB300 0%, #FAB300 ${((formData.q3 ? ['<1 year', '1–3 years', '4–7 years', '8–15 years', '30+ years'].indexOf(formData.q3) : 0) / 4) * 100}%, rgba(0,0,0,0.2) ${((formData.q3 ? ['<1 year', '1–3 years', '4–7 years', '8–15 years', '30+ years'].indexOf(formData.q3) : 0) / 4) * 100}%, rgba(0,0,0,0.2) 100%)`
                     }}
                   />
-                  <span className="text-xs text-black/60 font-medium">30+ years</span>
+                  <span className="text-[10px] sm:text-xs text-black/60 font-medium">30+ years</span>
                 </div>
               </div>
             </div>
 
             {/* Question 4 - Market */}
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-black">Which state do you focus on?</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-black">Which state do you focus on?</h3>
               <div
                 onClick={handleFirstInteraction}
-                className="w-full px-3 py-2 border border-black/20 rounded-sm bg-white text-black text-[13px] font-medium cursor-pointer flex items-center justify-between"
+                className="w-full px-3 py-2.5 border border-black/20 rounded-sm bg-white text-black text-[12px] sm:text-[13px] font-medium cursor-pointer flex items-center justify-between touch-manipulation"
               >
                 <span>Select a state...</span>
                 <svg className="w-3 h-3 text-black/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,10 +283,10 @@ export default function Home() {
 
             {/* Question 5 - Call Volume */}
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-black">How many cold calls did you make last week?</h3>
-              <div className="pl-2">
-                <div className="flex items-center gap-4">
-                  <span className="text-xs text-black/60 font-medium">0</span>
+              <h3 className="text-lg sm:text-xl font-semibold text-black">How many cold calls did you make last week?</h3>
+              <div>
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <span className="text-[10px] sm:text-xs text-black/60 font-medium">0</span>
                   <input
                     type="range"
                     min="0"
@@ -283,17 +305,17 @@ export default function Home() {
                       background: `linear-gradient(to right, #FAB300 0%, #FAB300 ${((formData.q5 ? ['0', '1–10', '11–25', '26–50', '50+'].indexOf(formData.q5) : 0) / 4) * 100}%, rgba(0,0,0,0.2) ${((formData.q5 ? ['0', '1–10', '11–25', '26–50', '50+'].indexOf(formData.q5) : 0) / 4) * 100}%, rgba(0,0,0,0.2) 100%)`
                     }}
                   />
-                  <span className="text-xs text-black/60 font-medium">50+</span>
+                  <span className="text-[10px] sm:text-xs text-black/60 font-medium">50+</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-3 sm:pt-4">
               <button
                 type="submit"
                 data-tooltip-id="submit-tooltip"
                 data-tooltip-content="Fill the form first. No Cheating :)"
-                className="w-full px-8 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity text-[13px] uppercase tracking-wide cursor-not-allowed rounded-sm"
+                className="w-full px-6 sm:px-8 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity text-[12px] sm:text-[13px] uppercase tracking-wide cursor-not-allowed rounded-sm"
                 style={{
                   background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
                 }}
@@ -318,16 +340,16 @@ export default function Home() {
           </form>
           </div>
         </div>
-        <p className="text-center text-xs text-white/50 py-4">2026Ⓒ <a href="https://www.trophy.inc" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline transition-all duration-[250ms]">Trophy</a></p>
+        <p className="text-center text-xs text-white/50 py-3 sm:py-4">2026Ⓒ <a href="https://www.trophy.inc" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline transition-all duration-[250ms]">Trophy</a></p>
 
         {/* Share It Section */}
-        <div className="mt-20 pt-12">
-          <div className="bg-stone-900 border border-stone-800 p-12 sm:p-14 rounded-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className="mt-12 sm:mt-20 pt-8 sm:pt-12">
+          <div className="bg-stone-900 border border-stone-800 p-6 sm:p-14 rounded-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
             {/* Left Column */}
             <div>
-              <h2 className="text-3xl font-bold text-white mb-4" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
-              <p className="text-white/80 font-medium">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
+              <p className="text-white/80 text-sm sm:text-base font-medium">
                 Drop this in your team chat or share with colleagues. 🔥
               </p>
             </div>
@@ -337,32 +359,44 @@ export default function Home() {
                 <div className="relative">
                   <textarea
                     readOnly
-                    value="You have to check out this guide: pickupthephone.club/2026-guide"
+                    value={textVariations[currentTextIndex]}
                     onClick={handleCopy}
-                    className="w-full px-4 py-3 pr-10 border border-black/20 rounded-sm bg-white text-black text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
-                    rows={3}
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-black text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                    rows={5}
                     aria-label="Message to copy"
                   />
                   <button
                     onClick={handleCopy}
-                    className="absolute top-2 right-2 p-1.5 text-black/60 hover:text-black transition-colors pointer-events-none"
+                    className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-black/60 hover:text-black transition-colors pointer-events-none"
                     aria-label="Copy"
                   >
-                    <svg className="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                   </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  className="px-6 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity whitespace-nowrap cursor-pointer uppercase text-[13px] rounded-sm"
-                  style={{
-                    background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
-                  }}
-                >
-                  {copied ? 'Copied!' : 'Copy text'}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    className="flex-1 px-5 sm:px-6 py-2.5 sm:py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity whitespace-nowrap cursor-pointer uppercase text-[12px] sm:text-[13px] rounded-sm"
+                    style={{
+                      background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
+                    }}
+                  >
+                    {copied ? 'Copied!' : 'Copy text'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleChangeText}
+                    className="w-[44px] sm:w-[52px] h-[42px] sm:h-[48px] flex items-center justify-center text-white/50 hover:text-white/70 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-all rounded-sm cursor-pointer"
+                    aria-label="Change text variation"
+                  >
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
             </div>
@@ -455,76 +489,116 @@ export default function Home() {
       {/* Popup Modal */}
       {(showPopup || isClosing) && (
         <div 
-          className={`fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-3 sm:p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
           onClick={handleClosePopup}
         >
           <div 
-            className={`bg-white max-w-3xl w-full p-8 sm:p-10 relative rounded-sm ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
+            className={`bg-white max-w-4xl w-full pt-8 sm:pt-16 px-5 sm:px-10 pb-3 sm:pb-5 relative rounded-sm max-h-[90vh] overflow-y-auto ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={handleClosePopup}
-              className="absolute top-4 right-4 p-2 text-black/60 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded-sm"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 p-2 text-black/60 hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded-sm cursor-pointer"
               aria-label="Close"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div className="text-center mb-16">
-              <h3 className="text-xl sm:text-2xl font-bold text-black mb-0.5" style={{ letterSpacing: '-0.5px' }}>
+            <div className="text-center mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-black/10">
+              <h3 className="text-lg sm:text-2xl font-bold text-black mb-0.5" style={{ letterSpacing: '-0.5px' }}>
                 Doesn't matter,
               </h3>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-black mb-4 leading-tight" style={{ letterSpacing: '-2px' }}>
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-black mb-3 sm:mb-4 leading-tight" style={{ letterSpacing: '-1px' }}>
                 Pick Up The Phone.
               </h2>
-              <p className="text-base text-black/70 mb-2 font-medium">
+              <p className="text-sm sm:text-base text-black/70 mb-2 font-medium">
                 No AI is going to save you. Start dialing.
               </p>
             </div>
             
-            {/* Share Section in Popup */}
-            <div className="mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                {/* Left Column */}
-                <div>
-                  <h2 className="text-2xl font-bold text-black mb-3" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
-                  <p className="text-black/60 text-sm font-medium">
-                    Drop this in your team chat or share with colleagues. 🔥
-                  </p>
-                </div>
-                {/* Right Column */}
-                <div>
-                  <div className="flex flex-col gap-1">
-                    <div className="relative">
-                      <textarea
-                        readOnly
-                        value="You have to check out this guide: pickupthephone.club/2026-guide"
-                        onClick={handleCopy}
-                        className="w-full px-4 py-3 pr-10 border border-black/20 rounded-sm bg-white text-black text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
-                        rows={3}
-                        aria-label="Message to copy"
-                      />
-                      <button
-                        onClick={handleCopy}
-                        className="absolute top-2 right-2 p-1.5 text-black/60 hover:text-black transition-colors"
-                        aria-label="Copy"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      </button>
+            {/* Share with Friends Button */}
+            <div className="mb-2 sm:mb-3">
+              <button
+                type="button"
+                onClick={() => setShowShareDropdown(!showShareDropdown)}
+                className="w-full flex items-center justify-center gap-2 px-6 sm:px-8 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-all text-[12px] sm:text-[13px] uppercase tracking-wide rounded-sm cursor-pointer"
+                style={{
+                  background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
+                }}
+              >
+                Share with friends
+                <svg 
+                  className={`w-4 h-4 transition-transform duration-300 ${showShareDropdown ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Share Section in Popup - Collapsible */}
+            <div 
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                showShareDropdown ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <div className="mb-0 pt-4 sm:pt-6 pb-4 sm:pb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
+                  {/* Left Column */}
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-black mb-2 sm:mb-3" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
+                    <p className="text-black/60 text-xs sm:text-sm font-medium">
+                      Drop this in your team chat or share with colleagues. 🔥
+                    </p>
+                  </div>
+                  {/* Right Column */}
+                  <div>
+                    <div className="flex flex-col gap-1">
+                      <div className="relative">
+                        <textarea
+                          readOnly
+                          value={textVariations[currentTextIndex]}
+                          onClick={handleCopy}
+                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 rounded-sm bg-gray-100 text-black text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                          rows={5}
+                          aria-label="Message to copy"
+                        />
+                        <button
+                          onClick={handleCopy}
+                          className="absolute top-1.5 sm:top-2 right-1.5 sm:right-2 p-1.5 text-black/60 hover:text-black transition-colors"
+                          aria-label="Copy"
+                        >
+                          <svg className="w-3.5 sm:w-4 h-3.5 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={handleCopy}
+                          className="flex-1 px-5 sm:px-6 py-2.5 sm:py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity whitespace-nowrap cursor-pointer uppercase text-[12px] sm:text-[13px] rounded-sm"
+                          style={{
+                            background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
+                          }}
+                        >
+                          {copied ? 'Copied!' : 'Copy text'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleChangeText}
+                          className="w-[44px] sm:w-[52px] h-[42px] sm:h-[48px] flex items-center justify-center text-black/50 hover:text-black/70 hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-all rounded-sm cursor-pointer"
+                          aria-label="Change text variation"
+                        >
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={handleCopy}
-                      className="px-6 py-3 text-black font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#FAB300] focus:ring-offset-2 transition-opacity whitespace-nowrap cursor-pointer uppercase text-[13px] rounded-sm"
-                  style={{
-                    background: 'linear-gradient(to bottom, #FED97D 0%, #FAB300 50%, #DFA000 100%)'
-                  }}
-                    >
-                      {copied ? 'Copied!' : 'Copy text'}
-                    </button>
                   </div>
                 </div>
               </div>
@@ -534,10 +608,10 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="bg-white border-t border-black/10 mt-20 py-12">
-        <div className="max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-black/60 text-base font-medium">Made by your friends at</span>
+      <footer className="bg-white border-t border-black/10 mt-12 sm:mt-20 py-8 sm:py-12">
+        <div className="max-w-[1000px] mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+            <span className="text-black/60 text-sm sm:text-base font-medium">Made by your friends at</span>
             <a 
               href="https://www.trophy.inc" 
               target="_blank" 
@@ -548,7 +622,7 @@ export default function Home() {
               <img 
                 src="/trophy-logo.svg" 
                 alt="Trophy" 
-                className="h-7 w-auto"
+                className="h-6 sm:h-7 w-auto"
               />
             </a>
           </div>
