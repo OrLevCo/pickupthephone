@@ -6,10 +6,7 @@ export const metadata: Metadata = {
   title: "Ultimate 2026 CRE Guide",
   description: "Get free AI-powered CRE coaching in seconds",
   icons: {
-    icon: [
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.ico', sizes: 'any' },
-    ],
+    icon: { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     apple: '/50f8083a78cd080bcb85eeeb16a12de2.ico/apple-icon.png',
   },
   openGraph: {
@@ -42,7 +39,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap"
