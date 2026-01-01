@@ -39,6 +39,8 @@ export default function Home() {
     'AI is coming for all of us: pickupthephone.club/2026-guide',
     'CRE is about to change: pickupthephone.club/2026-guide',
     'got a minute? pickupthephone.club/2026-guide',
+    'Heard of this new dealflow AI agent? pickupthephone.club',
+    'I can\'t believe this is free - pickupthephone.club/2026-guide',
   ];
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
@@ -173,7 +175,7 @@ export default function Home() {
               background: 'radial-gradient(circle at top center, #FFEEC3 0%, #FED97D 27%, #FAB300 68%, #DFA000 100%)'
             }}
           >
-            <p className="text-black/70 text-center text-xs sm:text-sm mb-2 font-medium">
+            <p className="text-black/60 text-center text-[10px] sm:text-xs mb-2 font-bold uppercase">
               Pick Up the Phone Club™️ Presents
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4" style={{ 
@@ -187,7 +189,7 @@ export default function Home() {
               The Ultimate Guide for<br />Success in CRE in 2026
             </h1>
             <p className="text-black/70 text-center text-sm sm:text-base mb-0 font-medium">
-              Get custom AI-based CRE coaching in seconds
+              Get free AI-powered CRE coaching in seconds
             </p>
           </div>
           <div className="p-5 sm:p-10 pt-4 sm:pt-6">
@@ -272,7 +274,7 @@ export default function Home() {
               <h3 className="text-lg sm:text-xl font-semibold text-black">Which state do you focus on?</h3>
               <div
                 onClick={handleFirstInteraction}
-                className="w-full px-3 py-2.5 border border-black/20 rounded-sm bg-white text-black text-[12px] sm:text-[13px] font-medium cursor-pointer flex items-center justify-between touch-manipulation"
+                className="w-full px-3 py-2 border border-black/20 rounded-sm bg-white text-black text-[12px] sm:text-[13px] font-medium cursor-pointer flex items-center justify-between touch-manipulation"
               >
                 <span>Select a state...</span>
                 <svg className="w-3 h-3 text-black/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -2,8 +2,27 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CRE Quiz | Trophy",
-  description: "Test your commercial real estate knowledge",
+  title: "The Ultimate Guide for Success in CRE in 2026 | Pick Up the Phone Club",
+  description: "Get free AI-powered CRE coaching in seconds",
+  openGraph: {
+    title: "The Ultimate Guide for Success in CRE in 2026",
+    description: "Get free AI-powered CRE coaching in seconds",
+    images: [
+      {
+        url: "/PUTP Opengraph 01.png",
+        width: 1200,
+        height: 630,
+        alt: "The Ultimate Guide for Success in CRE in 2026",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Ultimate Guide for Success in CRE in 2026",
+    description: "Get free AI-powered CRE coaching in seconds",
+    images: ["/PUTP Opengraph 01.png"],
+  },
 };
 
 export default function RootLayout({
