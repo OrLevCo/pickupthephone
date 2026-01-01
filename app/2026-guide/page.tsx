@@ -120,13 +120,25 @@ export default function Home() {
 
   return (
     <div 
-      className="min-h-screen flex flex-col" 
+      className="min-h-screen flex flex-col relative" 
       style={{ 
         backgroundColor: '#000000'
       }}
     >
+      {/* Background Image Overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 100%), url(/pupt-image-bg-01.png)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          maxHeight: '100vh',
+          opacity: 0.175,
+          filter: 'saturate(0)'
+        }}
+      />
       {/* Main Content */}
-      <main className="max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12 py-8 sm:py-12 flex-1">
+      <main className="max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 pb-8 sm:pb-12 flex-1 relative z-10">
         {/* Quiz Form */}
         <div 
           className={`border border-stone-800 bg-white max-w-[600px] mx-auto rounded-sm overflow-hidden ${isMounted ? 'animate-slide-in-bottom' : ''}`}
@@ -142,7 +154,14 @@ export default function Home() {
             <p className="text-black/70 text-center text-sm mb-2 font-medium">
               Pick Up the Phone Club™️ Presents
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black text-center mb-4 leading-tight" style={{ letterSpacing: '-2px' }}>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4" style={{ 
+              letterSpacing: '-2px', 
+              lineHeight: '1.3',
+              background: 'linear-gradient(to bottom, #333333 0%, #000000 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
               The Ultimate Guide for<br />Success in CRE in 2026
             </h1>
             <p className="text-black/70 text-center text-base mb-0 font-medium">
@@ -309,7 +328,7 @@ export default function Home() {
             <div>
               <h2 className="text-3xl font-bold text-white mb-4" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
               <p className="text-white/80 font-medium">
-                Drop this in your team chat or share with colleagues.
+                Drop this in your team chat or share with colleagues. 🔥
               </p>
             </div>
             {/* Right Column */}
@@ -436,11 +455,11 @@ export default function Home() {
       {/* Popup Modal */}
       {(showPopup || isClosing) && (
         <div 
-          className={`fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
+          className={`fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
           onClick={handleClosePopup}
         >
           <div 
-            className={`bg-white max-w-2xl w-full p-8 sm:p-10 relative rounded-sm ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
+            className={`bg-white max-w-3xl w-full p-8 sm:p-10 relative rounded-sm ${isClosing ? 'animate-slide-out-bounce' : 'animate-slide-in-bounce'}`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -471,7 +490,7 @@ export default function Home() {
                 <div>
                   <h2 className="text-2xl font-bold text-black mb-3" style={{ letterSpacing: '-0.5px' }}>Give your team the gift<br />of AI CRE coaching</h2>
                   <p className="text-black/60 text-sm font-medium">
-                    Drop this in your team chat or share with colleagues.
+                    Drop this in your team chat or share with colleagues. 🔥
                   </p>
                 </div>
                 {/* Right Column */}
@@ -529,7 +548,7 @@ export default function Home() {
               <img 
                 src="/trophy-logo.svg" 
                 alt="Trophy" 
-                className="h-8 w-auto"
+                className="h-7 w-auto"
               />
             </a>
           </div>
