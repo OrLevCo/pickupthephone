@@ -372,7 +372,7 @@ export default function Home() {
             {/* Left Column */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 heading-responsive-sub" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
-              <p className="text-white/80 text-xs sm:text-sm font-medium">
+              <p className="text-white/80 text-sm sm:text-sm font-medium">
                 Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
               </p>
             </div>
@@ -384,7 +384,7 @@ export default function Home() {
                     readOnly
                     value={textVariations[currentTextIndex]}
                     onClick={handleCopy}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-white/20 bg-stone-800 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-white/40 transition-colors"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-white/20 bg-stone-800 text-transparent text-sm sm:text-sm font-medium resize-none cursor-pointer hover:border-white/40 transition-colors"
                     style={{
                       borderRadius: '20px 20px 20px 4px'
                     }}
@@ -392,7 +392,7 @@ export default function Home() {
                     aria-label="Message to copy"
                   />
                   <div 
-                    className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-white/90 text-xs sm:text-sm font-medium whitespace-pre-wrap ${
+                    className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-white/90 text-sm sm:text-sm font-medium whitespace-pre-wrap ${
                       textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
                       textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
                     }`}
@@ -432,11 +432,12 @@ export default function Home() {
                   >
                     <svg 
                       className={`w-4 h-4 sm:w-5 sm:h-5 ${isArrowSpinning ? 'arrow-spin' : ''}`}
-                      fill="none" 
-                      stroke="currentColor" 
+                      fill="currentColor" 
                       viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582a8.001 8.001 0 1015.356 2m-15.356-2H9m11 11v-5h-.582a8.001 8.001 0 01-15.356-2m15.356 2H15" />
+                      <path d="M7.04284 17C8.323 18.2349 10.0881 19 12 19C15.866 19 19 15.866 19 12C19 11.7028 18.9815 11.4104 18.9458 11.1237L20.9304 10.8763C20.9764 11.2448 21 11.6199 21 12C21 16.9706 16.9706 21 12 21C9.72477 21 7.60877 20.1546 6 18.7559V21H4V15H10V17H7.04284Z" />
+                      <path d="M5 12C5 12.2972 5.01846 12.5896 5.05421 12.8763L3.06958 13.1237C3.02362 12.7552 3 12.3801 3 12C3 7.02944 7.02944 3 12 3C14.2808 3 16.4015 3.84954 18.0117 5.25427V3H20.0117V9H14.0117V7H16.9572C15.677 5.76515 13.9119 5 12 5C8.13401 5 5 8.13401 5 12Z" />
                     </svg>
                   </button>
                 </div>
@@ -593,7 +594,7 @@ export default function Home() {
                   {/* Left Column */}
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold text-black mb-2 sm:mb-3 heading-responsive-sub-popup" style={{ letterSpacing: '-0.5px' }}>Give your people<br />the gift of AI CRE coaching</h2>
-                    <p className="text-black/60 text-xs sm:text-sm font-medium">
+                    <p className="text-black/60 text-sm sm:text-sm font-medium">
                       Drop this in your team chat or share with friends to help them step up their game in 2026 🔥
                     </p>
                   </div>
@@ -605,7 +606,7 @@ export default function Home() {
                           readOnly
                           value={textVariations[currentTextIndex]}
                           onClick={handleCopy}
-                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 bg-gray-100 text-transparent text-xs sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
+                          className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 border border-black/20 bg-gray-100 text-transparent text-sm sm:text-sm font-medium resize-none cursor-pointer hover:border-black/40 transition-colors"
                           style={{
                             borderRadius: '20px 20px 20px 4px'
                           }}
@@ -613,7 +614,7 @@ export default function Home() {
                           aria-label="Message to copy"
                         />
                         <div 
-                          className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-black text-xs sm:text-sm font-medium whitespace-pre-wrap ${
+                          className={`absolute inset-0 px-3 sm:px-4 py-2.5 sm:py-3 pr-8 sm:pr-10 pointer-events-none flex items-start text-black text-sm sm:text-sm font-medium whitespace-pre-wrap ${
                             textAnimationState === 'fadeOut' ? 'text-content-changing-out' : 
                             textAnimationState === 'fadeIn' ? 'text-content-changing-in' : ''
                           }`}
@@ -653,11 +654,12 @@ export default function Home() {
                         >
                           <svg 
                             className={`w-4 h-4 sm:w-5 sm:h-5 ${isArrowSpinning ? 'arrow-spin' : ''}`}
-                            fill="none" 
-                            stroke="currentColor" 
+                            fill="currentColor" 
                             viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582a8.001 8.001 0 1015.356 2m-15.356-2H9m11 11v-5h-.582a8.001 8.001 0 01-15.356-2m15.356 2H15" />
+                            <path d="M7.04284 17C8.323 18.2349 10.0881 19 12 19C15.866 19 19 15.866 19 12C19 11.7028 18.9815 11.4104 18.9458 11.1237L20.9304 10.8763C20.9764 11.2448 21 11.6199 21 12C21 16.9706 16.9706 21 12 21C9.72477 21 7.60877 20.1546 6 18.7559V21H4V15H10V17H7.04284Z" />
+                            <path d="M5 12C5 12.2972 5.01846 12.5896 5.05421 12.8763L3.06958 13.1237C3.02362 12.7552 3 12.3801 3 12C3 7.02944 7.02944 3 12 3C14.2808 3 16.4015 3.84954 18.0117 5.25427V3H20.0117V9H14.0117V7H16.9572C15.677 5.76515 13.9119 5 12 5C8.13401 5 5 8.13401 5 12Z" />
                           </svg>
                         </button>
                       </div>
