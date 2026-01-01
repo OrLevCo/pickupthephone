@@ -4,14 +4,27 @@
   --background: #ffffff;
   --foreground: #000000;
   --trophy-yellow: #FFD700;
-  --trophy-gold: #F5C842;
+  --trophy-gold: #FAB300;
   --trophy-orange: #FF6B35;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Radio Button Styles */
+input[type="radio"] {
+  accent-color: #FAB300;
+}
+
+input[type="radio"]:checked {
+  accent-color: #FAB300;
 }
 
 /* Slider Styles */
@@ -26,18 +39,35 @@ input[type="range"].slider::-webkit-slider-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #F5C842;
+  background: #FAB300;
   cursor: pointer;
-  border: 2px solid #FFFFE0;
+  border: 2px solid #FCCA4D;
 }
 
 input[type="range"].slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #F5C842;
+  background: #FAB300;
   cursor: pointer;
-  border: 2px solid #FFFFE0;
+  border: 2px solid #FCCA4D;
+}
+
+/* Main Button Styles */
+.btn-primary {
+  background-color: #FAB300 !important;
+  color: #000000 !important;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+.btn-primary:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #FAB300;
+  ring-offset: 2px;
 }
 
 /* Tooltip Styles */
@@ -50,4 +80,85 @@ input[type="range"].slider::-moz-range-thumb {
   border-radius: 0 !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   z-index: 9999 !important;
+}
+
+/* Popup Animations */
+@keyframes slideInBounce {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(5%);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-2%);
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutBounce {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-slide-in-bounce {
+  animation: slideInBounce 0.3s ease-out;
+}
+
+.animate-slide-out-bounce {
+  animation: slideOutBounce 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
 }
