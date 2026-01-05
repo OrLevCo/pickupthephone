@@ -102,10 +102,11 @@ export default function Clock() {
 
   return (
     <div 
-      className="flex items-center justify-center bg-white" 
+      className="flex items-center justify-center" 
       style={{ 
         height: '100vh',
         maxWidth: '100vw',
+        backgroundColor: '#fafafa',
         overflow: 'visible' 
       }}
     >
@@ -165,10 +166,10 @@ export default function Clock() {
             strokeWidth="3"
             style={{ 
               filter: `
-                drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.2))
-                drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.15))
-                drop-shadow(4px 8px 8px hsl(0deg 0% 0% / 0.1))
-                drop-shadow(8px 16px 16px hsl(0deg 0% 0% / 0.05))
+                drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.12))
+                drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.09))
+                drop-shadow(4px 8px 8px hsl(0deg 0% 0% / 0.06))
+                drop-shadow(8px 16px 16px hsl(0deg 0% 0% / 0.03))
               `.replace(/\s+/g, ' ').trim()
             }}
           />
@@ -324,7 +325,7 @@ export default function Clock() {
         <div
           className="text-center flex items-center justify-center gap-2"
           style={{
-            marginTop: '16px',
+            marginTop: '24px',
             flexShrink: 0,
             flexGrow: 0,
             fontFamily: 'Satoshi, sans-serif',
