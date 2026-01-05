@@ -140,7 +140,7 @@ export default function Clock() {
             fontWeight: '900',
             textTransform: 'uppercase',
             letterSpacing: '-0.3px',
-            animation: 'fadeIn 1s ease-out both',
+            animation: 'fadeIn 1s linear both',
             opacity: 0
           }}
         >
@@ -160,7 +160,7 @@ export default function Clock() {
             maxHeight: '100%',
             aspectRatio: '1',
             overflow: 'visible',
-            animation: 'fadeIn 4s ease-out 0.3s both',
+            animation: 'fadeIn 4s linear 0.3s both',
             opacity: 0
           }}
         >
@@ -323,7 +323,7 @@ export default function Clock() {
             color: '#666666',
             lineHeight: '1.5',
             letterSpacing: '-0.4px',
-            animation: 'fadeIn 1s ease-out both',
+            animation: 'fadeIn 1s linear both',
             opacity: 0
           }}
         >
@@ -343,7 +343,7 @@ export default function Clock() {
             fontSize: '10px',
             fontWeight: '500',
             color: '#b3b3b3',
-            animation: 'fadeIn 1s ease-out both',
+            animation: 'fadeIn 1s linear both',
             opacity: 0
           }}
         >
