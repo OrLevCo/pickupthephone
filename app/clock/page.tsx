@@ -155,7 +155,22 @@ export default function Clock() {
             opacity: 0
           }}
         >
-          <span style={{ color: '#666666' }}>PICK UP THE PHONE CLUB </span>
+          <a
+            href="https://www.linkedin.com/company/pick-up-the-phone-club/?viewAsMember=true"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: '#666666',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.5'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+          >
+            PICK UP THE PHONE CLUB
+          </a>
+          {' '}
           <span style={{ color: '#b3b3b3' }}>PRESENTS</span>
         </div>
 

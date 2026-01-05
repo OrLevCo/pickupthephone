@@ -3,23 +3,23 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pickupthephone.club'),
-  title: "Ultimate 2026 CRE Guide",
-  description: "Get free AI-powered CRE coaching in seconds",
+  title: "Call Clock: Pick Up The Phone.",
+  description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
   icons: {
-    icon: { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    apple: '/50f8083a78cd080bcb85eeeb16a12de2.ico/apple-icon.png',
+    icon: { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+    apple: '/favicon-96x96.png',
   },
   openGraph: {
-    title: "Ultimate 2026 CRE Guide",
-    description: "Get free AI-powered CRE coaching in seconds",
+    title: "Call Clock: Pick Up The Phone.",
+    description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
     url: "https://pickupthephone.club",
     siteName: "Pick Up the Phone Club",
     images: [
       {
-        url: "https://pickupthephone.club/putp-opengraph-01.png",
+        url: "https://pickupthephone.club/PUTP Clock Opengraph 2.png",
         width: 1200,
         height: 630,
-        alt: "Ultimate 2026 CRE Guide",
+        alt: "Pick Up The Phone Club Clock",
         type: "image/png",
       },
     ],
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ultimate 2026 CRE Guide",
-    description: "Get free AI-powered CRE coaching in seconds",
-    images: ["https://pickupthephone.club/putp-opengraph-01.png"],
+    title: "Call Clock: Pick Up The Phone.",
+    description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
+    images: ["https://pickupthephone.club/PUTP Clock Opengraph 2.png"],
   },
 };
 
@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700&display=swap"
