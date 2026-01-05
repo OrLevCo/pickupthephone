@@ -128,6 +128,17 @@ export default function Clock() {
           gap: '0'
         }}
       >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '100%',
+            flexShrink: 0,
+            margin: 'auto'
+          }}
+        >
         {/* Text above clock */}
         <div
           className="text-center"
@@ -151,7 +162,7 @@ export default function Clock() {
         <svg
           viewBox={`0 0 ${clockSize} ${clockSize}`}
           style={{ 
-            flex: '1 1 0',
+            flex: '0 0 auto',
             minWidth: 0,
             minHeight: 0,
             width: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
@@ -365,6 +376,7 @@ export default function Clock() {
               }}
             />
           </a>
+        </div>
         </div>
       </div>
     </div>

@@ -307,6 +307,10 @@ input[type="range"].slider::-moz-range-thumb {
 
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
+  body {
+    padding-bottom: 10vh;
+  }
+  
   /* Improve touch scrolling */
   * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
