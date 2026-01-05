@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react';
 
 export default function Clock() {
+  // TEMPORARY: Set to true to show 10:10, false to show actual time
+  const USE_FIXED_TIME = false;
+  const FIXED_HOUR = 10;
+  const FIXED_MINUTE = 10;
+
   const [time, setTime] = useState(() => {
     // Initialize with current local time
     // new Date() automatically uses the browser's system timezone and local time
@@ -33,10 +38,10 @@ export default function Clock() {
 
   // Extract local time components
   // These methods automatically use the local timezone from the Date object
-  const hours = time.getHours() % 12; // 0-11 for 12-hour format (getHours() returns 0-23)
-  const minutes = time.getMinutes(); // 0-59
-  const seconds = time.getSeconds(); // 0-59
-  const milliseconds = time.getMilliseconds(); // 0-999
+  const hours = USE_FIXED_TIME ? FIXED_HOUR % 12 : time.getHours() % 12; // 0-11 for 12-hour format (getHours() returns 0-23)
+  const minutes = USE_FIXED_TIME ? FIXED_MINUTE : time.getMinutes(); // 0-59
+  const seconds = USE_FIXED_TIME ? 0 : time.getSeconds(); // 0-59
+  const milliseconds = USE_FIXED_TIME ? 0 : time.getMilliseconds(); // 0-999
 
   // Calculate rotation angles with smooth movement
   // Hour hand: 30 degrees per hour + 0.5 degrees per minute + smooth seconds/milliseconds
@@ -221,9 +226,9 @@ export default function Clock() {
           {/* Hour hand - Thick hand, moderate elevation with layered shadows */}
           <g style={{ 
             filter: `
-              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.3))
-              drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.2))
-              drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.1))
+              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.15))
+              drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.1))
+              drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim()
           }}>
             <line
@@ -241,9 +246,9 @@ export default function Clock() {
           {/* Minute hand - Medium hand, moderate elevation with layered shadows */}
           <g style={{ 
             filter: `
-              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.3))
-              drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.2))
-              drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.1))
+              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.15))
+              drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.1))
+              drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim()
           }}>
             <line
@@ -276,8 +281,8 @@ export default function Clock() {
           {/* Second hand - Thin hand, subtle elevation with layered shadows, rendered on top */}
           <g style={{ 
             filter: `
-              drop-shadow(0.5px 1px 1px hsl(0deg 0% 0% / 0.25))
-              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.15))
+              drop-shadow(0.5px 1px 1px hsl(0deg 0% 0% / 0.12))
+              drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.08))
             `.replace(/\s+/g, ' ').trim()
           }}>
             {/* Main grey part of second hand */}
