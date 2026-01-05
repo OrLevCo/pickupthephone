@@ -135,6 +135,8 @@ export default function Clock() {
             fontWeight: '900',
             textTransform: 'uppercase',
             letterSpacing: '-0.3px',
+            animation: 'fadeIn 1s ease-out both',
+            opacity: 0
           }}
         >
           <span style={{ color: '#666666' }}>PICK UP THE PHONE CLUB </span>
@@ -153,7 +155,7 @@ export default function Clock() {
             maxHeight: '100%',
             aspectRatio: '1',
             overflow: 'visible',
-            animation: 'fadeIn 1s ease-out 0.3s both',
+            animation: 'fadeIn 4s ease-out 0.3s both',
             opacity: 0
           }}
         >
@@ -316,6 +318,8 @@ export default function Clock() {
             color: '#666666',
             lineHeight: '1.5',
             letterSpacing: '-0.4px',
+            animation: 'fadeIn 1s ease-out both',
+            opacity: 0
           }}
         >
           In CRE, Calls &gt; Everything Else.
@@ -334,6 +338,8 @@ export default function Clock() {
             fontSize: '10px',
             fontWeight: '500',
             color: '#b3b3b3',
+            animation: 'fadeIn 1s ease-out both',
+            opacity: 0
           }}
         >
           <span>Created by</span>
