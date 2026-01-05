@@ -152,7 +152,9 @@ export default function Clock() {
             maxWidth: '100%',
             maxHeight: '100%',
             aspectRatio: '1',
-            overflow: 'visible' 
+            overflow: 'visible',
+            animation: 'fadeIn 1s ease-out 0.3s both',
+            opacity: 0
           }}
         >
 
@@ -265,7 +267,7 @@ export default function Clock() {
           <circle
             cx={center}
             cy={center}
-            r="2"
+            r="2.5"
             fill="#333333"
           />
 
