@@ -116,7 +116,7 @@ export default function Clock() {
       }}
     >
       <div 
-        className="flex flex-col items-center" 
+        className="flex flex-col items-center clock-container-mobile" 
         style={{ 
           width: '100%',
           height: '100%',

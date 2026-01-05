@@ -307,8 +307,8 @@ input[type="range"].slider::-moz-range-thumb {
 
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
-  body {
-    padding-bottom: 10vh;
+  .clock-container-mobile {
+    padding-bottom: calc(24px + 10vh) !important;
   }
   
   /* Improve touch scrolling */
