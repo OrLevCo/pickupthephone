@@ -294,10 +294,10 @@ export default function Clock() {
           transition: 'opacity 0.15s',
           zIndex: 1000,
           filter: `
-            drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.12))
-            drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.09))
-            drop-shadow(4px 8px 8px hsl(0deg 0% 0% / 0.06))
-            drop-shadow(8px 16px 16px hsl(0deg 0% 0% / 0.03))
+            drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.06))
+            drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.04))
+            drop-shadow(4px 8px 8px hsl(0deg 0% 0% / 0.03))
+            drop-shadow(8px 16px 16px hsl(0deg 0% 0% / 0.015))
           `.replace(/\s+/g, ' ').trim()
         }}
         onMouseEnter={(e) => {
@@ -381,31 +381,15 @@ export default function Clock() {
             flexShrink: 0,
             flexGrow: 0,
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: '12px',
-            fontWeight: '900',
-            textTransform: 'uppercase',
+            fontSize: '14px',
+            fontWeight: '800',
             letterSpacing: '-0.3px',
+            textTransform: 'uppercase',
             animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0
           }}
         >
-          <span style={{ color: '#b3b3b3' }}>A friendly reminder from</span>
-          <br />
-          <a
-            href="https://www.linkedin.com/company/pick-up-the-phone-club/?viewAsMember=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: '#666666',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'opacity 0.15s'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.5'}
-            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-          >
-            Pick up the phone club
-          </a>
+          <span style={{ color: '#b3b3b3' }}>A friendly reminder:</span>
         </div>
 
         {/* SVG container - wraps clock face and hands for proper positioning */}
@@ -780,12 +764,13 @@ export default function Clock() {
             letterSpacing: '-0.2px',
             animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0,
-            position: 'relative'
+            position: 'relative',
+            maxWidth: '403px',
+            margin: '12px auto 0'
           }}
         >
-          Calls drive CRE business more than anything else.
-          <br />
-          <span style={{ color: '#666666' }}>
+          Calls drive CRE business more than anything else.{' '}
+          <span style={{ color: '#000000' }}>
             <span
               onClick={async () => {
                 try {
@@ -819,9 +804,9 @@ export default function Clock() {
             <div
               style={{
                 position: 'absolute',
-                top: '-40px',
+                top: '50%',
                 left: '50%',
-                transform: 'translateX(-50%)',
+                transform: 'translate(-50%, -50%)',
                 backgroundColor: '#333333',
                 color: 'white',
                 padding: '6px 12px',
