@@ -769,7 +769,7 @@ export default function Clock() {
         >
           <span>Created by</span>
           <a
-            href="https://trophy.inc"
+            href="https://trophy.inc?utm_source=pickupthephone&utm_medium=referral"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: 'inline-block', transition: 'opacity 0.15s' }}

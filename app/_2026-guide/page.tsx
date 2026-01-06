@@ -365,7 +365,7 @@ export default function Home() {
           </form>
           </div>
         </div>
-        <p className="text-center text-xs text-white/50 py-3 sm:py-4">2026Ⓒ <a href="https://www.trophy.inc" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline transition-all duration-[250ms]">Trophy</a></p>
+        <p className="text-center text-xs text-white/50 py-3 sm:py-4">2026Ⓒ <a href="https://www.trophy.inc?utm_source=pickupthephone&utm_medium=referral" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline transition-all duration-[250ms]">Trophy</a></p>
 
         {/* Share It Section */}
         <div className="mt-6 sm:mt-10 pt-4 sm:pt-6">
@@ -680,7 +680,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
             <span className="text-black/60 text-sm sm:text-base font-medium">Made by your friends at</span>
             <a 
-              href="https://www.trophy.inc" 
+              href="https://www.trophy.inc?utm_source=pickupthephone&utm_medium=referral" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center hover:opacity-80 transition-opacity"
