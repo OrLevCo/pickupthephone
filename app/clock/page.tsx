@@ -16,11 +16,11 @@ export default function Clock() {
 
   // Rotating text states
   const rotatingTexts = [
-    'scrolling Linkedin',
-    'reading emails',
-    'sending DMs',
-    'updating CRM',
-    'checking news'
+    'scrolling Linkedin.',
+    'reading emails.',
+    'sending DMs.',
+    'updating CRM.',
+    'checking news.'
   ];
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'out' | 'in'>('idle');
