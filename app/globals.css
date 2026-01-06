@@ -305,6 +305,33 @@ input[type="range"].slider::-moz-range-thumb {
   }
 }
 
+/* Rotating Text Slide Up Animations */
+@keyframes slideUpOut {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slideUpIn {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.text-slide-up-out {
+  animation: slideUpOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.text-slide-up-in {
+  animation: slideUpIn 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
   .clock-container-mobile {

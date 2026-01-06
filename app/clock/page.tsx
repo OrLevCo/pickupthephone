@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Clock() {
   // TEMPORARY: Set to true to show 10:10, false to show actual time
@@ -13,6 +13,31 @@ export default function Clock() {
     // new Date() automatically uses the browser's system timezone and local time
     return new Date();
   });
+
+  // Rotating text states
+  const rotatingTexts = [
+    'scrolling Linkedin',
+    'reading emails',
+    'sending DMs',
+    'updating CRM',
+    'checking news'
+  ];
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [animationPhase, setAnimationPhase] = useState<'idle' | 'out' | 'in'>('idle');
+  const nextTextIndexRef = React.useRef(1);
+  const [pillWidth, setPillWidth] = useState(0);
+  const measureRef = React.useRef<HTMLSpanElement>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  // Measure the longest text to determine pill width
+  useEffect(() => {
+    if (measureRef.current) {
+      const longestText = rotatingTexts.reduce((a, b) => a.length > b.length ? a : b);
+      measureRef.current.textContent = longestText;
+      const width = measureRef.current.offsetWidth;
+      setPillWidth(width + 24); // Add padding (12px * 2)
+    }
+  }, [rotatingTexts]);
 
   useEffect(() => {
     let animationFrameId: number;
@@ -35,6 +60,53 @@ export default function Clock() {
       }
     };
   }, []);
+
+  // Rotate text every 5 seconds, synced with clock time
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    let animationTimeoutId: NodeJS.Timeout;
+    let animationInTimeoutId: NodeJS.Timeout;
+
+    const scheduleNextAnimation = () => {
+      const now = new Date();
+      const currentSeconds = now.getSeconds();
+      const currentMilliseconds = now.getMilliseconds();
+      
+      // Calculate milliseconds until next 5-second mark (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55)
+      const secondsUntilNextTick = 5 - (currentSeconds % 5);
+      const millisecondsUntilNextTick = secondsUntilNextTick * 1000 - currentMilliseconds;
+      
+      // Start animation 300ms before the tick so it finishes exactly at the tick
+      const animationStartDelay = Math.max(0, millisecondsUntilNextTick - 300);
+      
+      timeoutId = setTimeout(() => {
+        // Phase 1: Slide out current text
+        setAnimationPhase('out');
+        // Phase 2: After slide out, switch to next text and slide in
+        animationTimeoutId = setTimeout(() => {
+          const nextIndex = nextTextIndexRef.current;
+          setCurrentTextIndex(nextIndex);
+          nextTextIndexRef.current = (nextIndex + 1) % rotatingTexts.length;
+          setAnimationPhase('in');
+          // Phase 3: After slide in, return to idle
+          animationInTimeoutId = setTimeout(() => {
+            setAnimationPhase('idle');
+            // Schedule next animation
+            scheduleNextAnimation();
+          }, 300);
+        }, 300);
+      }, animationStartDelay);
+    };
+
+    // Initial schedule
+    scheduleNextAnimation();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (animationTimeoutId) clearTimeout(animationTimeoutId);
+      if (animationInTimeoutId) clearTimeout(animationInTimeoutId);
+    };
+  }, [rotatingTexts.length]);
 
   // Extract local time components
   // These methods automatically use the local timezone from the Date object
@@ -105,6 +177,18 @@ export default function Clock() {
     return { x1, y1, x2, y2, isHourMark };
   });
 
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShowTooltip(true);
+      setTimeout(() => {
+        setShowTooltip(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
   return (
     <div 
       className="flex items-center justify-center" 
@@ -112,9 +196,78 @@ export default function Clock() {
         height: '100vh',
         maxWidth: '100vw',
         backgroundColor: '#fafafa',
-        overflow: 'visible' 
+        overflow: 'visible',
+        position: 'relative'
       }}
     >
+      {/* Share button */}
+      <button
+        onClick={handleShare}
+        style={{
+          position: 'absolute',
+          top: '24px',
+          right: '24px',
+          width: '40px',
+          height: '40px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'white',
+          border: '1.5px solid black',
+          cursor: 'pointer',
+          padding: '0',
+          borderRadius: '50%',
+          transition: 'opacity 0.15s',
+          zIndex: 1000,
+          filter: `
+            drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.12))
+            drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.09))
+            drop-shadow(4px 8px 8px hsl(0deg 0% 0% / 0.06))
+            drop-shadow(8px 16px 16px hsl(0deg 0% 0% / 0.03))
+          `.replace(/\s+/g, ' ').trim()
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = '0.7';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = '1';
+        }}
+        aria-label="Share"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0_5837_1611)">
+            <path d="M8 6L12 2L16 6" stroke="black" strokeWidth="2" strokeLinecap="square"/>
+            <path d="M12 3V13" stroke="black" strokeWidth="2" strokeLinecap="square"/>
+            <path d="M7 10H5V20H19V10H17" stroke="black" strokeWidth="2" strokeLinecap="square"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_5837_1611">
+              <rect width="24" height="24" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+        {showTooltip && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '50px',
+              right: '0',
+              backgroundColor: '#333333',
+              color: 'white',
+              padding: '6px 12px',
+              borderRadius: '6px',
+              fontSize: '12px',
+              fontFamily: 'Satoshi, sans-serif',
+              fontWeight: '500',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'none',
+              animation: 'fadeIn 0.2s ease-out'
+            }}
+          >
+            Link copied
+          </div>
+        )}
+      </button>
       <div 
         className="flex flex-col items-center clock-container-mobile" 
         style={{ 
@@ -128,6 +281,7 @@ export default function Clock() {
           gap: '0'
         }}
       >
+        {/* Clock container */}
         <div
           style={{
             display: 'flex',
@@ -136,7 +290,7 @@ export default function Clock() {
             width: '100%',
             maxWidth: '100%',
             flexShrink: 0,
-            margin: 'auto'
+            position: 'relative'
           }}
         >
         {/* Text above clock */}
@@ -163,7 +317,7 @@ export default function Clock() {
               color: '#666666',
               textDecoration: 'none',
               cursor: 'pointer',
-              transition: 'opacity 0.2s'
+              transition: 'opacity 0.15s'
             }}
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.5'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
@@ -186,7 +340,7 @@ export default function Clock() {
             maxHeight: '100%',
             aspectRatio: '1',
             overflow: 'visible',
-            animation: 'fadeIn 4s linear 0.3s both',
+            animation: 'fadeIn 2.5s linear 0.3s both',
             opacity: 0
           }}
         >
@@ -248,6 +402,123 @@ export default function Clock() {
               CALL
             </text>
           ))}
+
+          {/* Hidden element to measure text width */}
+          <foreignObject
+            x="-1000"
+            y="-1000"
+            width="1"
+            height="1"
+            style={{ overflow: 'hidden', position: 'absolute', visibility: 'hidden' }}
+          >
+            <span
+              ref={measureRef}
+              style={{
+                fontFamily: 'Satoshi, sans-serif',
+                fontSize: '12px',
+                fontWeight: '700',
+                whiteSpace: 'nowrap',
+                position: 'absolute'
+              }}
+            />
+          </foreignObject>
+
+          {/* Stop text and rotating pill - positioned between center and top (behind hands) */}
+          <foreignObject
+            x={center - (pillWidth || 160) / 2}
+            y={center - radius * 0.5 - 10}
+            width={pillWidth || 160}
+            height="60"
+            style={{ overflow: 'visible' }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2px',
+                fontFamily: 'Satoshi, sans-serif',
+                fontSize: '12px'
+              }}
+            >
+              <span style={{ 
+                textAlign: 'center',
+                fontWeight: '700',
+                color: '#666666',
+                fontSize: '12px'
+              }}>Stop</span>
+              <div
+                style={{
+                  backgroundColor: 'white',
+                  border: '1.5px solid #b3b3b3',
+                  borderRadius: '20px',
+                  padding: '10px 12px',
+                  width: pillWidth ? `${pillWidth}px` : 'auto',
+                  textAlign: 'center',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: '700',
+                  boxShadow: 'inset 0.5px 1px 1px hsl(0deg 0% 0% / 0.12), inset 1px 2px 2px hsl(0deg 0% 0% / 0.08)'
+                }}
+              >
+                {animationPhase === 'out' && (
+                  <span
+                    key={`out-${currentTextIndex}`}
+                    className="text-slide-up-out"
+                    style={{
+                      position: 'absolute',
+                      whiteSpace: 'nowrap',
+                      fontWeight: '700'
+                    }}
+                  >
+                    {rotatingTexts[currentTextIndex]}
+                  </span>
+                )}
+                {(animationPhase === 'in' || animationPhase === 'idle') && (
+                  <span
+                    key={`in-${currentTextIndex}`}
+                    className={animationPhase === 'in' ? 'text-slide-up-in' : ''}
+                    style={{
+                      position: 'absolute',
+                      whiteSpace: 'nowrap',
+                      fontWeight: '700'
+                    }}
+                  >
+                    {rotatingTexts[currentTextIndex]}
+                  </span>
+                )}
+              </div>
+            </div>
+          </foreignObject>
+
+          {/* Start dialing text - positioned between center and bottom (behind hands) */}
+          <foreignObject
+            x={center - 80}
+            y={center + radius * 0.5 - 37}
+            width={160}
+            height="20"
+            style={{ overflow: 'visible' }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                fontFamily: 'Satoshi, sans-serif',
+                fontSize: '12px'
+              }}
+            >
+              <span style={{ 
+                textAlign: 'center',
+                fontWeight: '700',
+                color: '#666666',
+                fontSize: '12px'
+              }}>Start dialing.</span>
+            </div>
+          </foreignObject>
 
           {/* Hour hand - Thick hand, moderate elevation with layered shadows */}
           <g style={{ 
@@ -316,16 +587,16 @@ export default function Clock() {
               x1={center}
               y1={center}
               x2={center}
-              y2={center - radius * 0.75 + 12}
+              y2={center - radius * 0.75 + 20.4}
               stroke="#333333"
               strokeWidth="1.5"
               strokeLinecap="round"
               transform={`rotate(${secondAngle}, ${center}, ${center})`}
             />
-            {/* Red tip of second hand - 50% longer (12px instead of 8px) */}
+            {/* Red tip of second hand - 70% longer (20.4px instead of 12px) */}
             <line
               x1={center}
-              y1={center - radius * 0.75 + 12}
+              y1={center - radius * 0.75 + 20.4}
               x2={center}
               y2={center - radius * 0.75}
               stroke="#dc2626"
@@ -353,9 +624,9 @@ export default function Clock() {
             opacity: 0
           }}
         >
-          In CRE, Calls &gt; Everything Else.
+          Calls drive CRE business more than anything else.
           <br />
-          Pick Up The Phone.
+          Pick up the phone.
         </div>
 
         {/* Created by with Trophy logo */}
@@ -378,7 +649,7 @@ export default function Clock() {
             href="https://trophy.inc"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'inline-block', transition: 'opacity 0.2s' }}
+            style={{ display: 'inline-block', transition: 'opacity 0.15s' }}
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
