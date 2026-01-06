@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function Clock() {
   // TEMPORARY: Set to true to show 10:10, false to show actual time
-  const USE_FIXED_TIME = false;
+  const USE_FIXED_TIME = true;
   const FIXED_HOUR = 10;
   const FIXED_MINUTE = 10;
 
@@ -350,6 +350,8 @@ export default function Clock() {
             opacity: 0
           }}
         >
+          <span style={{ color: '#b3b3b3' }}>A friendly reminder from</span>
+          <br />
           <a
             href="https://www.linkedin.com/company/pick-up-the-phone-club/?viewAsMember=true"
             target="_blank"
@@ -363,12 +365,115 @@ export default function Clock() {
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.5'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
-            PICK UP THE PHONE CLUB
+            Pick up the phone club
           </a>
-          {' '}
-          <span style={{ color: '#b3b3b3' }}>PRESENTS</span>
         </div>
 
+        {/* SVG container - wraps clock face and hands for proper positioning */}
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        {/* Stop text and rotating pill - positioned absolutely over SVG, scales with clock */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -100%)',
+            marginTop: `calc(-1 * min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.5 + 10) / clockSize})`,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2px',
+            fontFamily: 'Satoshi, sans-serif',
+            fontSize: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
+            opacity: contentReady ? undefined : 0,
+            zIndex: 2,
+            pointerEvents: 'none'
+          }}
+        >
+          <span style={{ 
+            textAlign: 'center',
+            fontWeight: '700',
+            color: '#666666',
+            fontSize: 'inherit',
+            display: 'block'
+          }}>Stop</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              border: '1.5px solid #b3b3b3',
+              borderRadius: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${20 / clockSize}, 20px)`,
+              padding: `clamp(6px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${9 / clockSize}, 9px) clamp(7px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${10 / clockSize}, 10px)`,
+              width: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
+              minWidth: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
+              maxWidth: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: '700',
+              boxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
+              WebkitBoxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
+              margin: '0 auto',
+              boxSizing: 'border-box',
+              fontSize: 'inherit'
+            }}
+          >
+            {animationPhase === 'out' && (
+              <span
+                key={`out-${currentTextIndex}`}
+                className="text-slide-up-out"
+                style={{
+                  position: 'absolute',
+                  whiteSpace: 'nowrap',
+                  fontWeight: '700',
+                  fontSize: 'inherit'
+                }}
+              >
+                {rotatingTexts[currentTextIndex]}
+              </span>
+            )}
+            {(animationPhase === 'in' || animationPhase === 'idle') && (
+              <span
+                key={`in-${currentTextIndex}`}
+                className={animationPhase === 'in' ? 'text-slide-up-in' : ''}
+                style={{
+                  position: 'absolute',
+                  whiteSpace: 'nowrap',
+                  fontWeight: '700',
+                  fontSize: 'inherit'
+                }}
+              >
+                {rotatingTexts[currentTextIndex]}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Start dialing text - positioned absolutely over SVG, scales with clock */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, 0)',
+            marginTop: `min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.5 - 37) / clockSize}`,
+            fontFamily: 'Satoshi, sans-serif',
+            fontSize: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            fontWeight: '700',
+            color: '#666666',
+            textAlign: 'center',
+            animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
+            opacity: contentReady ? undefined : 0,
+            zIndex: 2,
+            pointerEvents: 'none'
+          }}
+        >
+          Start dialing.
+        </div>
+        {/* Clock face SVG - lower z-index so pill appears above it */}
         <svg
           viewBox={`0 0 ${clockSize} ${clockSize}`}
           style={{ 
@@ -386,6 +491,20 @@ export default function Clock() {
             zIndex: 0
           }}
         >
+          {/* SVG filters for inset shadow */}
+          <defs>
+            <filter id="insetShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+              <feOffset dx="0.5" dy="1" result="offsetblur"/>
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.12"/>
+              </feComponentTransfer>
+              <feMerge>
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
 
           {/* Clock face circle - Large element, substantial elevation with layered shadows */}
           <circle
@@ -463,7 +582,7 @@ export default function Clock() {
               ref={measureRef}
               style={{
                 fontFamily: 'Satoshi, sans-serif',
-                fontSize: '12px',
+                fontSize: '18px',
                 fontWeight: '700',
                 whiteSpace: 'nowrap',
                 position: 'absolute'
@@ -471,141 +590,36 @@ export default function Clock() {
             />
           </foreignObject>
 
-          {/* Pill and text container - behind hands */}
-          <g style={{
-            isolation: 'isolate',
-            transform: 'translateZ(0)',
-            willChange: 'transform',
-            position: 'relative',
-            zIndex: 1
-          }}>
-          {/* Stop text and rotating pill - positioned between center and top (behind hands) */}
-          <foreignObject
-            x={Math.round(center - (pillWidth || 160) / 2)}
-            y={Math.round(center - radius * 0.5 - 10)}
-            width={pillWidth || 160}
-            height="60"
-            style={{ 
-              overflow: 'visible',
-              animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '2px',
-                fontFamily: 'Satoshi, sans-serif',
-                fontSize: '12px',
-                width: '100%',
-                height: '100%',
-                WebkitFontSmoothing: 'antialiased',
-                MozOsxFontSmoothing: 'grayscale'
-              }}
-            >
-              <span style={{ 
-                textAlign: 'center',
-                fontWeight: '700',
-                color: '#666666',
-                fontSize: '12px',
-                display: 'block',
-                width: '100%'
-              }}>Stop</span>
-              <div
-                style={{
-                  backgroundColor: 'white',
-                  border: '1.5px solid #b3b3b3',
-                  borderRadius: '20px',
-                  padding: '9px 10px',
-                  width: pillWidth ? `${pillWidth}px` : 'auto',
-                  minWidth: pillWidth ? `${pillWidth}px` : 'auto',
-                  maxWidth: pillWidth ? `${pillWidth}px` : 'auto',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: '700',
-                  boxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
-                  WebkitBoxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
-                  margin: '0 auto',
-                  boxSizing: 'border-box'
-                }}
-              >
-                {animationPhase === 'out' && (
-                  <span
-                    key={`out-${currentTextIndex}`}
-                    className="text-slide-up-out"
-                    style={{
-                      position: 'absolute',
-                      left: '50%',
-                      whiteSpace: 'nowrap',
-                      fontWeight: '700'
-                    }}
-                  >
-                    {rotatingTexts[currentTextIndex]}
-                  </span>
-                )}
-                {(animationPhase === 'in' || animationPhase === 'idle') && (
-                  <span
-                    key={`in-${currentTextIndex}`}
-                    className={animationPhase === 'in' ? 'text-slide-up-in' : ''}
-                    style={{
-                      position: 'absolute',
-                      left: '50%',
-                      whiteSpace: 'nowrap',
-                      fontWeight: '700'
-                    }}
-                  >
-                    {rotatingTexts[currentTextIndex]}
-                  </span>
-                )}
-              </div>
-            </div>
-          </foreignObject>
 
-          {/* Start dialing text - positioned between center and bottom (behind hands) */}
-          <foreignObject
-            x={center - 80}
-            y={center + radius * 0.5 - 37}
-            width={160}
-            height="20"
-            style={{ 
-              overflow: 'visible',
-              animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                fontFamily: 'Satoshi, sans-serif',
-                fontSize: '12px'
-              }}
-            >
-              <span style={{ 
-                textAlign: 'center',
-                fontWeight: '700',
-                color: '#666666',
-                fontSize: '12px'
-              }}>Start dialing.</span>
-            </div>
-          </foreignObject>
-          </g>
+        </svg>
 
+        {/* Clock hands SVG - separate SVG with higher z-index to appear above pill */}
+        {/* Positioned absolutely to overlay the clock face SVG */}
+        <svg
+          viewBox={`0 0 ${clockSize} ${clockSize}`}
+          style={{ 
+            position: 'absolute',
+            top: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            flex: '0 0 auto',
+            minWidth: 0,
+            minHeight: 0,
+            width: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
+            height: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            aspectRatio: '1',
+            overflow: 'visible',
+            pointerEvents: 'none',
+            zIndex: 3
+          }}
+        >
           {/* Clock hands container - ensures proper stacking above pill and text */}
           <g style={{
             isolation: 'isolate',
             transform: 'translateZ(0)',
-            willChange: 'transform',
-            position: 'relative',
-            zIndex: 10
+            willChange: 'transform'
           }}>
           {/* Hour hand - Thick hand, moderate elevation with layered shadows */}
           <g style={{ 
@@ -705,6 +719,7 @@ export default function Clock() {
           </g>
           </g>
         </svg>
+        </div>
 
         {/* Text below clock */}
         <div
@@ -718,7 +733,7 @@ export default function Clock() {
             fontWeight: '500',
             color: '#666666',
             lineHeight: '1.5',
-            letterSpacing: '-0.4px',
+            letterSpacing: '-0.2px',
             animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0
           }}
