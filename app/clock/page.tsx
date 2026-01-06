@@ -470,15 +470,16 @@ export default function Clock() {
 
           {/* Stop text and rotating pill - positioned between center and top (behind hands) */}
           <foreignObject
-            x={center - (pillWidth || 160) / 2}
-            y={center - radius * 0.5 - 10}
+            x={Math.round(center - (pillWidth || 160) / 2)}
+            y={Math.round(center - radius * 0.5 - 10)}
             width={pillWidth || 160}
             height="60"
             style={{ 
               overflow: 'visible',
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
               opacity: contentReady ? undefined : 0,
-              pointerEvents: 'none'
+              position: 'relative',
+              zIndex: 1
             }}
           >
             <div
@@ -491,14 +492,18 @@ export default function Clock() {
                 fontFamily: 'Satoshi, sans-serif',
                 fontSize: '12px',
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale'
               }}
             >
               <span style={{ 
                 textAlign: 'center',
                 fontWeight: '700',
                 color: '#666666',
-                fontSize: '12px'
+                fontSize: '12px',
+                display: 'block',
+                width: '100%'
               }}>Stop</span>
               <div
                 style={{
@@ -516,7 +521,8 @@ export default function Clock() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontWeight: '700',
-                  boxShadow: 'inset 0.5px 1px 1px hsl(0deg 0% 0% / 0.12), inset 1px 2px 2px hsl(0deg 0% 0% / 0.08), 0 1px 2px rgba(0, 0, 0, 0.1)',
+                  boxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
+                  WebkitBoxShadow: 'inset 0.5px 1px 1px rgba(0, 0, 0, 0.12), inset 1px 2px 2px rgba(0, 0, 0, 0.08)',
                   margin: '0 auto',
                   boxSizing: 'border-box'
                 }}
@@ -589,7 +595,9 @@ export default function Clock() {
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0
+            opacity: contentReady ? undefined : 0,
+            isolation: 'isolate',
+            zIndex: 2
           }}>
             <line
               x1={center}
@@ -611,7 +619,9 @@ export default function Clock() {
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0
+            opacity: contentReady ? undefined : 0,
+            isolation: 'isolate',
+            zIndex: 2
           }}>
             <line
               x1={center}
@@ -628,7 +638,9 @@ export default function Clock() {
           {/* Center dot / Pivot */}
           <g style={{
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0
+            opacity: contentReady ? undefined : 0,
+            isolation: 'isolate',
+            zIndex: 2
           }}>
             <circle
               cx={center}
@@ -652,7 +664,9 @@ export default function Clock() {
               drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.08))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0
+            opacity: contentReady ? undefined : 0,
+            isolation: 'isolate',
+            zIndex: 3
           }}>
             {/* Main grey part of second hand */}
             <line
