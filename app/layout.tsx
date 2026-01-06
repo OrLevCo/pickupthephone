@@ -3,15 +3,15 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pickupthephone.club'),
-  title: "Call Clock: Pick Up The Phone.",
-  description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
+  title: "Pick Up The Phone Club · Call Clock",
+  description: "Calls drive CRE business more than anything else. Pick up the phone.",
   icons: {
     icon: { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     apple: '/favicon-96x96.png',
   },
   openGraph: {
-    title: "Call Clock: Pick Up The Phone.",
-    description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
+    title: "Pick Up The Phone Club · Call Clock",
+    description: "Calls drive CRE business more than anything else. Pick up the phone.",
     url: "https://pickupthephone.club",
     siteName: "Pick Up the Phone Club",
     images: [
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Call Clock: Pick Up The Phone.",
-    description: "In CRE, Calls > Everything Else. Pick Up The Phone. Created by trophy.inc",
+    title: "Pick Up The Phone Club · Call Clock",
+    description: "Calls drive CRE business more than anything else. Pick up the phone.",
     images: ["https://pickupthephone.club/PUTP Clock Opengraph 2.png"],
   },
 };
