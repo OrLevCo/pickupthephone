@@ -380,7 +380,10 @@ export default function Clock() {
             maxWidth: '100%',
             maxHeight: '100%',
             aspectRatio: '1',
-            overflow: 'visible'
+            overflow: 'visible',
+            isolation: 'isolate',
+            position: 'relative',
+            zIndex: 0
           }}
         >
 
@@ -479,7 +482,10 @@ export default function Clock() {
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
               opacity: contentReady ? undefined : 0,
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              isolation: 'isolate',
+              transform: 'translateZ(0)',
+              willChange: 'transform'
             }}
           >
             <div
@@ -566,7 +572,11 @@ export default function Clock() {
             style={{ 
               overflow: 'visible',
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0
+              opacity: contentReady ? undefined : 0,
+              isolation: 'isolate',
+              transform: 'translateZ(0)',
+              position: 'relative',
+              zIndex: 1
             }}
           >
             <div
@@ -587,6 +597,14 @@ export default function Clock() {
             </div>
           </foreignObject>
 
+          {/* Clock hands container - ensures proper stacking above pill and text */}
+          <g style={{
+            isolation: 'isolate',
+            transform: 'translateZ(0)',
+            willChange: 'transform',
+            position: 'relative',
+            zIndex: 10
+          }}>
           {/* Hour hand - Thick hand, moderate elevation with layered shadows */}
           <g style={{ 
             filter: `
@@ -595,9 +613,7 @@ export default function Clock() {
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0,
-            isolation: 'isolate',
-            zIndex: 2
+            opacity: contentReady ? undefined : 0
           }}>
             <line
               x1={center}
@@ -619,9 +635,7 @@ export default function Clock() {
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0,
-            isolation: 'isolate',
-            zIndex: 2
+            opacity: contentReady ? undefined : 0
           }}>
             <line
               x1={center}
@@ -638,9 +652,7 @@ export default function Clock() {
           {/* Center dot / Pivot */}
           <g style={{
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0,
-            isolation: 'isolate',
-            zIndex: 2
+            opacity: contentReady ? undefined : 0
           }}>
             <circle
               cx={center}
@@ -664,9 +676,7 @@ export default function Clock() {
               drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.08))
             `.replace(/\s+/g, ' ').trim(),
             animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
-            opacity: contentReady ? undefined : 0,
-            isolation: 'isolate',
-            zIndex: 3
+            opacity: contentReady ? undefined : 0
           }}>
             {/* Main grey part of second hand */}
             <line
@@ -690,6 +700,7 @@ export default function Clock() {
               strokeLinecap="round"
               transform={`rotate(${secondAngle}, ${center}, ${center})`}
             />
+          </g>
           </g>
         </svg>
 
