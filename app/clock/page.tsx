@@ -471,6 +471,14 @@ export default function Clock() {
             />
           </foreignObject>
 
+          {/* Pill and text container - behind hands */}
+          <g style={{
+            isolation: 'isolate',
+            transform: 'translateZ(0)',
+            willChange: 'transform',
+            position: 'relative',
+            zIndex: 1
+          }}>
           {/* Stop text and rotating pill - positioned between center and top (behind hands) */}
           <foreignObject
             x={Math.round(center - (pillWidth || 160) / 2)}
@@ -480,12 +488,7 @@ export default function Clock() {
             style={{ 
               overflow: 'visible',
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0,
-              position: 'relative',
-              zIndex: 1,
-              isolation: 'isolate',
-              transform: 'translateZ(0)',
-              willChange: 'transform'
+              opacity: contentReady ? undefined : 0
             }}
           >
             <div
@@ -539,6 +542,7 @@ export default function Clock() {
                     className="text-slide-up-out"
                     style={{
                       position: 'absolute',
+                      left: '50%',
                       whiteSpace: 'nowrap',
                       fontWeight: '700'
                     }}
@@ -552,6 +556,7 @@ export default function Clock() {
                     className={animationPhase === 'in' ? 'text-slide-up-in' : ''}
                     style={{
                       position: 'absolute',
+                      left: '50%',
                       whiteSpace: 'nowrap',
                       fontWeight: '700'
                     }}
@@ -572,11 +577,7 @@ export default function Clock() {
             style={{ 
               overflow: 'visible',
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0,
-              isolation: 'isolate',
-              transform: 'translateZ(0)',
-              position: 'relative',
-              zIndex: 1
+              opacity: contentReady ? undefined : 0
             }}
           >
             <div
@@ -596,6 +597,7 @@ export default function Clock() {
               }}>Start dialing.</span>
             </div>
           </foreignObject>
+          </g>
 
           {/* Clock hands container - ensures proper stacking above pill and text */}
           <g style={{
