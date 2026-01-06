@@ -414,7 +414,7 @@ export default function Clock() {
                 strokeWidth={tick.isHourMark ? 3 : 1}
                 strokeLinecap="round"
                 style={{
-                  animation: contentReady ? `fadeIn 0.3s linear ${i * 0.02}s both` : 'none',
+                  animation: contentReady ? `fadeIn 0.3s linear ${i * 0.02 + 0.1}s both` : 'none',
                   opacity: contentReady ? undefined : 0
                 }}
               />
@@ -434,7 +434,7 @@ export default function Clock() {
                 fontSize: '16px',
                 fontFamily: 'Satoshi, sans-serif',
                 letterSpacing: '-0.8px',
-                animation: contentReady ? `fadeIn 0.3s linear ${i * 0.1}s both` : 'none',
+                animation: contentReady ? `fadeIn 0.3s linear ${i * 0.1 + 0.1}s both` : 'none',
                 opacity: contentReady ? undefined : 0
               }}
             >
@@ -470,7 +470,7 @@ export default function Clock() {
             height="60"
             style={{ 
               overflow: 'visible',
-              animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+              animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
               opacity: contentReady ? undefined : 0
             }}
           >
@@ -545,7 +545,7 @@ export default function Clock() {
             height="20"
             style={{ 
               overflow: 'visible',
-              animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+              animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
               opacity: contentReady ? undefined : 0
             }}
           >
@@ -573,7 +573,9 @@ export default function Clock() {
               drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.15))
               drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.1))
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
-            `.replace(/\s+/g, ' ').trim()
+            `.replace(/\s+/g, ' ').trim(),
+            animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+            opacity: contentReady ? undefined : 0
           }}>
             <line
               x1={center}
@@ -593,7 +595,9 @@ export default function Clock() {
               drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.15))
               drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.1))
               drop-shadow(4px 8px 6px hsl(0deg 0% 0% / 0.05))
-            `.replace(/\s+/g, ' ').trim()
+            `.replace(/\s+/g, ' ').trim(),
+            animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+            opacity: contentReady ? undefined : 0
           }}>
             <line
               x1={center}
@@ -608,26 +612,33 @@ export default function Clock() {
           </g>
 
           {/* Center dot / Pivot */}
-          <circle
-            cx={center}
-            cy={center}
-            r="6"
-            fill="black"
-          />
-          {/* Inner grey circle */}
-          <circle
-            cx={center}
-            cy={center}
-            r="2.5"
-            fill="#333333"
-          />
+          <g style={{
+            animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+            opacity: contentReady ? undefined : 0
+          }}>
+            <circle
+              cx={center}
+              cy={center}
+              r="6"
+              fill="black"
+            />
+            {/* Inner grey circle */}
+            <circle
+              cx={center}
+              cy={center}
+              r="2.5"
+              fill="#333333"
+            />
+          </g>
 
           {/* Second hand - Thin hand, subtle elevation with layered shadows, rendered on top */}
           <g style={{ 
             filter: `
               drop-shadow(0.5px 1px 1px hsl(0deg 0% 0% / 0.12))
               drop-shadow(1px 2px 2px hsl(0deg 0% 0% / 0.08))
-            `.replace(/\s+/g, ' ').trim()
+            `.replace(/\s+/g, ' ').trim(),
+            animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+            opacity: contentReady ? undefined : 0
           }}>
             {/* Main grey part of second hand */}
             <line
