@@ -334,12 +334,19 @@ input[type="range"].slider::-moz-range-thumb {
 
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
+  /* Make outer container justify to top on mobile */
+  .flex.items-center.justify-center {
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+  
   .clock-container-mobile {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-content: center !important;
+    height: 80vh !important;
   }
   
   /* Ensure clock container stays compact and centered on mobile */
