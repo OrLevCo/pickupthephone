@@ -244,6 +244,10 @@ export default function Clock() {
           right: '24px',
           width: '40px',
           height: '40px',
+          minWidth: '40px',
+          maxWidth: '40px',
+          minHeight: '40px',
+          maxHeight: '40px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -252,6 +256,8 @@ export default function Clock() {
           cursor: 'pointer',
           padding: '0',
           borderRadius: '50%',
+          boxSizing: 'border-box',
+          flexShrink: 0,
           transition: 'opacity 0.15s',
           zIndex: 1000,
           filter: `
@@ -471,7 +477,8 @@ export default function Clock() {
             style={{ 
               overflow: 'visible',
               animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
-              opacity: contentReady ? undefined : 0
+              opacity: contentReady ? undefined : 0,
+              pointerEvents: 'none'
             }}
           >
             <div
@@ -479,9 +486,12 @@ export default function Clock() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '2px',
                 fontFamily: 'Satoshi, sans-serif',
-                fontSize: '12px'
+                fontSize: '12px',
+                width: '100%',
+                height: '100%'
               }}
             >
               <span style={{ 
@@ -497,6 +507,8 @@ export default function Clock() {
                   borderRadius: '20px',
                   padding: '9px 10px',
                   width: pillWidth ? `${pillWidth}px` : 'auto',
+                  minWidth: pillWidth ? `${pillWidth}px` : 'auto',
+                  maxWidth: pillWidth ? `${pillWidth}px` : 'auto',
                   textAlign: 'center',
                   position: 'relative',
                   overflow: 'hidden',
@@ -504,7 +516,9 @@ export default function Clock() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontWeight: '700',
-                  boxShadow: 'inset 0.5px 1px 1px hsl(0deg 0% 0% / 0.12), inset 1px 2px 2px hsl(0deg 0% 0% / 0.08)'
+                  boxShadow: 'inset 0.5px 1px 1px hsl(0deg 0% 0% / 0.12), inset 1px 2px 2px hsl(0deg 0% 0% / 0.08), 0 1px 2px rgba(0, 0, 0, 0.1)',
+                  margin: '0 auto',
+                  boxSizing: 'border-box'
                 }}
               >
                 {animationPhase === 'out' && (
