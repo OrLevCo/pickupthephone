@@ -335,7 +335,29 @@ input[type="range"].slider::-moz-range-thumb {
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
   .clock-container-mobile {
-    padding-bottom: calc(24px + 10vh) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-content: center !important;
+  }
+  
+  /* Ensure clock container stays compact and centered on mobile */
+  .clock-content-container {
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+  }
+  
+  /* Make SVG container stay compact on mobile */
+  .clock-svg-container {
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+  }
+  
+  /* Ensure SVG scales appropriately but stays compact on mobile */
+  .clock-svg-container svg {
+    max-width: min(calc(100vw - 48px), calc(100vh - 200px)) !important;
+    max-height: min(calc(100vw - 48px), calc(100vh - 200px)) !important;
   }
   
   /* Improve touch scrolling */

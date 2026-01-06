@@ -27,7 +27,10 @@ export default function Clock() {
   const nextTextIndexRef = React.useRef(1);
   const [pillWidth, setPillWidth] = useState(0);
   const measureRef = React.useRef<HTMLSpanElement>(null);
+  const svgContainerRef = React.useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState(400);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showBottomTooltip, setShowBottomTooltip] = useState(false);
   const [contentReady, setContentReady] = useState(false);
   const [pillWidthReady, setPillWidthReady] = useState(false);
   const [timeInitialized, setTimeInitialized] = useState(false);
@@ -43,6 +46,36 @@ export default function Clock() {
       // Fallback if fonts API is not available
       setFontsReady(true);
     }
+  }, []);
+
+  // Measure the SVG container size
+  useEffect(() => {
+    if (!svgContainerRef.current) return;
+
+    const updateContainerSize = () => {
+      if (svgContainerRef.current) {
+        const size = Math.min(svgContainerRef.current.offsetWidth, svgContainerRef.current.offsetHeight);
+        if (size > 0) {
+          setContainerSize(size);
+        }
+      }
+    };
+
+    // Use ResizeObserver for more accurate measurements
+    const resizeObserver = new ResizeObserver(() => {
+      updateContainerSize();
+    });
+
+    resizeObserver.observe(svgContainerRef.current);
+    updateContainerSize();
+
+    // Also listen to window resize as fallback
+    window.addEventListener('resize', updateContainerSize);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateContainerSize);
+    };
   }, []);
 
   // Measure the longest text to determine pill width
@@ -313,10 +346,12 @@ export default function Clock() {
         className="flex flex-col items-center clock-container-mobile" 
         style={{ 
           width: '100%',
-          height: '100%',
-          padding: '24px',
-          minHeight: 0,
-          overflow: 'hidden',
+          height: '100vh',
+          paddingTop: '24px',
+          paddingBottom: '24px',
+          paddingLeft: '24px',
+          paddingRight: '24px',
+          overflow: 'visible',
           boxSizing: 'border-box',
           justifyContent: 'center',
           gap: '0'
@@ -324,14 +359,18 @@ export default function Clock() {
       >
         {/* Clock container */}
         <div
+          className="clock-content-container"
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
             width: '100%',
             maxWidth: '100%',
-            flexShrink: 0,
-            position: 'relative'
+            flex: '1 1 0',
+            minHeight: 0,
+            position: 'relative',
+            gap: '0'
           }}
         >
         {/* Text above clock */}
@@ -370,7 +409,7 @@ export default function Clock() {
         </div>
 
         {/* SVG container - wraps clock face and hands for proper positioning */}
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        <div ref={svgContainerRef} className="clock-svg-container" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', flex: '1 1 0', minHeight: 0, marginBottom: '12px' }}>
         {/* Stop text and rotating pill - positioned absolutely over SVG, scales with clock */}
         {/* Positioned at center + 35% from top (35% of radius upward from center) */}
         <div
@@ -379,13 +418,13 @@ export default function Clock() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -100%)',
-            marginTop: `calc(-1 * min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.35) / clockSize})`,
+            marginTop: `calc(-1 * ${containerSize}px * ${(radius * 0.35) / clockSize})`,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: '2px',
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            fontSize: `clamp(10px, ${containerSize}px * ${18 / clockSize}, 18px)`,
             animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
             opacity: contentReady ? undefined : 0,
             zIndex: 2,
@@ -403,15 +442,15 @@ export default function Clock() {
             style={{
               backgroundColor: 'white',
               border: '1.5px solid #b3b3b3',
-              borderRadius: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${20 / clockSize}, 20px)`,
-              width: pillWidth ? `clamp(${pillWidth * 0.7}px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
-              minWidth: pillWidth ? `clamp(${pillWidth * 0.7}px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
-              height: `clamp(26px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(18 + 12) / clockSize}, ${18 + 12}px)`,
-              minHeight: `clamp(26px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(18 + 12) / clockSize}, ${18 + 12}px)`,
-              paddingLeft: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${12 / clockSize}, 12px)`,
-              paddingRight: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${12 / clockSize}, 12px)`,
-              paddingTop: `clamp(6px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${6 / clockSize}, 6px)`,
-              paddingBottom: `clamp(6px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${6 / clockSize}, 6px)`,
+              borderRadius: `clamp(12px, ${containerSize}px * ${20 / clockSize}, 20px)`,
+              width: pillWidth ? `clamp(${pillWidth * 0.7}px, ${containerSize}px * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
+              minWidth: pillWidth ? `clamp(${pillWidth * 0.7}px, ${containerSize}px * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
+              height: `clamp(26px, ${containerSize}px * ${(18 + 12) / clockSize}, ${18 + 12}px)`,
+              minHeight: `clamp(26px, ${containerSize}px * ${(18 + 12) / clockSize}, ${18 + 12}px)`,
+              paddingLeft: `clamp(10px, ${containerSize}px * ${12 / clockSize}, 12px)`,
+              paddingRight: `clamp(10px, ${containerSize}px * ${12 / clockSize}, 12px)`,
+              paddingTop: `clamp(6px, ${containerSize}px * ${6 / clockSize}, 6px)`,
+              paddingBottom: `clamp(6px, ${containerSize}px * ${6 / clockSize}, 6px)`,
               textAlign: 'center',
               position: 'relative',
               overflow: 'hidden',
@@ -468,9 +507,9 @@ export default function Clock() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, 0)',
-            marginTop: `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.30) / clockSize})`,
+            marginTop: `calc(${containerSize}px * ${(radius * 0.30) / clockSize})`,
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            fontSize: `clamp(10px, ${containerSize}px * ${18 / clockSize}, 18px)`,
             fontWeight: '700',
             color: '#666666',
             textAlign: 'center',
@@ -486,18 +525,16 @@ export default function Clock() {
         <svg
           viewBox={`0 0 ${clockSize} ${clockSize}`}
           style={{ 
-            flex: '0 0 auto',
-            minWidth: 0,
-            minHeight: 0,
-            width: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
-            height: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
+            width: '100%',
+            height: '100%',
             maxWidth: '100%',
             maxHeight: '100%',
             aspectRatio: '1',
             overflow: 'visible',
             isolation: 'isolate',
             position: 'relative',
-            zIndex: 0
+            zIndex: 0,
+            objectFit: 'contain'
           }}
         >
           {/* SVG filters for inset shadow */}
@@ -611,17 +648,15 @@ export default function Clock() {
             top: 0,
             left: '50%',
             transform: 'translateX(-50%)',
-            flex: '0 0 auto',
-            minWidth: 0,
-            minHeight: 0,
-            width: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
-            height: 'min(calc(100vw - 48px), calc(100vh - 48px - 120px))',
+            width: '100%',
+            height: '100%',
             maxWidth: '100%',
             maxHeight: '100%',
             aspectRatio: '1',
             overflow: 'visible',
             pointerEvents: 'none',
-            zIndex: 3
+            zIndex: 3,
+            objectFit: 'contain'
           }}
         >
           {/* Clock hands container - ensures proper stacking above pill and text */}
@@ -738,18 +773,71 @@ export default function Clock() {
             flexShrink: 0,
             flexGrow: 0,
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: '14px',
+            fontSize: '18px',
             fontWeight: '500',
             color: '#666666',
             lineHeight: '1.5',
             letterSpacing: '-0.2px',
             animation: contentReady ? 'fadeIn 1s linear both' : 'none',
-            opacity: 0
+            opacity: 0,
+            position: 'relative'
           }}
         >
           Calls drive CRE business more than anything else.
           <br />
-          Pick up the phone.
+          <span style={{ color: '#666666' }}>
+            <span
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(window.location.href);
+                  setShowBottomTooltip(true);
+                  setTimeout(() => {
+                    setShowBottomTooltip(false);
+                  }, 2000);
+                } catch (err) {
+                  console.error('Failed to copy link:', err);
+                }
+              }}
+              style={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                transition: 'opacity 0.15s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '0.7';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
+            >
+              Share this
+            </span>
+            {' with a friend. '}
+          </span>
+          <span style={{ color: '#000000' }}>Pick up the phone.</span>
+          {showBottomTooltip && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: '#333333',
+                color: 'white',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontFamily: 'Satoshi, sans-serif',
+                fontWeight: '500',
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+                animation: 'fadeIn 0.2s linear',
+                zIndex: 1000
+              }}
+            >
+              Link copied
+            </div>
+          )}
         </div>
 
         {/* Created by with Trophy logo */}
