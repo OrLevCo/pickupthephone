@@ -335,7 +335,7 @@ input[type="range"].slider::-moz-range-thumb {
 /* Mobile Touch Optimizations */
 @media (max-width: 640px) {
   /* Make outer container justify to top on mobile */
-  .flex.items-center.justify-center {
+  div.flex.items-center.justify-center {
     justify-content: flex-start !important;
     align-items: center !important;
   }
