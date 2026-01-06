@@ -325,11 +325,11 @@ input[type="range"].slider::-moz-range-thumb {
 }
 
 .text-slide-up-out {
-  animation: slideUpOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation: slideUpOut 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .text-slide-up-in {
-  animation: slideUpIn 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+  animation: slideUpIn 0.2s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 /* Mobile Touch Optimizations */

@@ -51,7 +51,7 @@ export default function Clock() {
       const longestText = rotatingTexts.reduce((a, b) => a.length > b.length ? a : b);
       measureRef.current.textContent = longestText;
       const width = measureRef.current.offsetWidth;
-      setPillWidth(width + 24); // Add padding (12px * 2)
+      setPillWidth(width + 20); // Add padding (10px * 2)
       setPillWidthReady(true);
     }
   }, [rotatingTexts, fontsReady]);
@@ -111,8 +111,8 @@ export default function Clock() {
       const secondsUntilNextTick = 5 - (currentSeconds % 5);
       const millisecondsUntilNextTick = secondsUntilNextTick * 1000 - currentMilliseconds;
       
-      // Start animation 300ms before the tick so it finishes exactly at the tick
-      const animationStartDelay = Math.max(0, millisecondsUntilNextTick - 300);
+      // Start animation 200ms before the tick so it finishes exactly at the tick
+      const animationStartDelay = Math.max(0, millisecondsUntilNextTick - 200);
       
       timeoutId = setTimeout(() => {
         // Phase 1: Slide out current text
@@ -128,8 +128,8 @@ export default function Clock() {
             setAnimationPhase('idle');
             // Schedule next animation
             scheduleNextAnimation();
-          }, 300);
-        }, 300);
+          }, 200);
+        }, 200);
       }, animationStartDelay);
     };
 
@@ -495,7 +495,7 @@ export default function Clock() {
                   backgroundColor: 'white',
                   border: '1.5px solid #b3b3b3',
                   borderRadius: '20px',
-                  padding: '10px 12px',
+                  padding: '9px 10px',
                   width: pillWidth ? `${pillWidth}px` : 'auto',
                   textAlign: 'center',
                   position: 'relative',
