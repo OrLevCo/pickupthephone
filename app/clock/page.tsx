@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function Clock() {
   // TEMPORARY: Set to true to show 10:10, false to show actual time
-  const USE_FIXED_TIME = true;
+  const USE_FIXED_TIME = false;
   const FIXED_HOUR = 10;
   const FIXED_MINUTE = 10;
 
@@ -51,7 +51,7 @@ export default function Clock() {
       const longestText = rotatingTexts.reduce((a, b) => a.length > b.length ? a : b);
       measureRef.current.textContent = longestText;
       const width = measureRef.current.offsetWidth;
-      setPillWidth(width + 20); // Add padding (10px * 2)
+      setPillWidth(width + 24); // Add horizontal padding (12px * 2)
       setPillWidthReady(true);
     }
   }, [rotatingTexts, fontsReady]);
@@ -372,19 +372,20 @@ export default function Clock() {
         {/* SVG container - wraps clock face and hands for proper positioning */}
         <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         {/* Stop text and rotating pill - positioned absolutely over SVG, scales with clock */}
+        {/* Positioned at center + 35% from top (35% of radius upward from center) */}
         <div
           style={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -100%)',
-            marginTop: `calc(-1 * min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.5 + 10) / clockSize})`,
+            marginTop: `calc(-1 * min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.35) / clockSize})`,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: '2px',
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            fontSize: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
             animation: contentReady ? 'fadeIn 0.3s linear 0.1s both' : 'none',
             opacity: contentReady ? undefined : 0,
             zIndex: 2,
@@ -403,10 +404,14 @@ export default function Clock() {
               backgroundColor: 'white',
               border: '1.5px solid #b3b3b3',
               borderRadius: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${20 / clockSize}, 20px)`,
-              padding: `clamp(6px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${9 / clockSize}, 9px) clamp(7px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${10 / clockSize}, 10px)`,
-              width: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
-              minWidth: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
-              maxWidth: pillWidth ? `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize})` : 'auto',
+              width: pillWidth ? `clamp(${pillWidth * 0.7}px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
+              minWidth: pillWidth ? `clamp(${pillWidth * 0.7}px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${pillWidth / clockSize}, ${pillWidth}px)` : 'auto',
+              height: `clamp(22px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(18 + 8) / clockSize}, ${18 + 8}px)`,
+              minHeight: `clamp(22px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(18 + 8) / clockSize}, ${18 + 8}px)`,
+              paddingLeft: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${12 / clockSize}, 12px)`,
+              paddingRight: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${12 / clockSize}, 12px)`,
+              paddingTop: `clamp(4px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${4 / clockSize}, 4px)`,
+              paddingBottom: `clamp(4px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${4 / clockSize}, 4px)`,
               textAlign: 'center',
               position: 'relative',
               overflow: 'hidden',
@@ -427,6 +432,7 @@ export default function Clock() {
                 className="text-slide-up-out"
                 style={{
                   position: 'absolute',
+                  left: '50%',
                   whiteSpace: 'nowrap',
                   fontWeight: '700',
                   fontSize: 'inherit'
@@ -441,6 +447,8 @@ export default function Clock() {
                 className={animationPhase === 'in' ? 'text-slide-up-in' : ''}
                 style={{
                   position: 'absolute',
+                  left: '50%',
+                  transform: animationPhase === 'idle' ? 'translate(-50%, 0)' : undefined,
                   whiteSpace: 'nowrap',
                   fontWeight: '700',
                   fontSize: 'inherit'
@@ -453,15 +461,16 @@ export default function Clock() {
         </div>
 
         {/* Start dialing text - positioned absolutely over SVG, scales with clock */}
+        {/* Positioned at center + 30% from top (30% of radius downward from center) */}
         <div
           style={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, 0)',
-            marginTop: `min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.5 - 37) / clockSize}`,
+            marginTop: `calc(min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${(radius * 0.30) / clockSize})`,
             fontFamily: 'Satoshi, sans-serif',
-            fontSize: `clamp(12px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
+            fontSize: `clamp(10px, min(calc(100vw - 48px), calc(100vh - 48px - 120px)) * ${18 / clockSize}, 18px)`,
             fontWeight: '700',
             color: '#666666',
             textAlign: 'center',

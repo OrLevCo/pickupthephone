@@ -308,19 +308,19 @@ input[type="range"].slider::-moz-range-thumb {
 /* Rotating Text Slide Up Animations */
 @keyframes slideUpOut {
   0% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
   100% {
-    transform: translateY(-20px);
+    transform: translate(-50%, -20px);
   }
 }
 
 @keyframes slideUpIn {
   0% {
-    transform: translateY(20px);
+    transform: translate(-50%, 20px);
   }
   100% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }
 
