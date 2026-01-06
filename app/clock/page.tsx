@@ -28,19 +28,37 @@ export default function Clock() {
   const [pillWidth, setPillWidth] = useState(0);
   const measureRef = React.useRef<HTMLSpanElement>(null);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
+  const [pillWidthReady, setPillWidthReady] = useState(false);
+  const [timeInitialized, setTimeInitialized] = useState(false);
+  const [fontsReady, setFontsReady] = useState(false);
+
+  // Wait for fonts to load
+  useEffect(() => {
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        setFontsReady(true);
+      });
+    } else {
+      // Fallback if fonts API is not available
+      setFontsReady(true);
+    }
+  }, []);
 
   // Measure the longest text to determine pill width
   useEffect(() => {
-    if (measureRef.current) {
+    if (measureRef.current && fontsReady) {
       const longestText = rotatingTexts.reduce((a, b) => a.length > b.length ? a : b);
       measureRef.current.textContent = longestText;
       const width = measureRef.current.offsetWidth;
       setPillWidth(width + 24); // Add padding (12px * 2)
+      setPillWidthReady(true);
     }
-  }, [rotatingTexts]);
+  }, [rotatingTexts, fontsReady]);
 
   useEffect(() => {
     let animationFrameId: number;
+    let firstUpdate = true;
     
     const updateTime = () => {
       // Get fresh local time on each frame
@@ -48,6 +66,16 @@ export default function Clock() {
       // This is the standard JavaScript way - no external API needed
       const now = new Date();
       setTime(now);
+      
+      // Mark time as initialized after first update to ensure correct positioning
+      if (firstUpdate) {
+        firstUpdate = false;
+        // Use requestAnimationFrame to ensure hands are rendered
+        requestAnimationFrame(() => {
+          setTimeInitialized(true);
+        });
+      }
+      
       animationFrameId = requestAnimationFrame(updateTime);
     };
     
@@ -60,6 +88,13 @@ export default function Clock() {
       }
     };
   }, []);
+
+  // Set contentReady only when time is initialized, pill width is calculated, and fonts are loaded
+  useEffect(() => {
+    if (timeInitialized && pillWidthReady && fontsReady) {
+      setContentReady(true);
+    }
+  }, [timeInitialized, pillWidthReady, fontsReady]);
 
   // Rotate text every 5 seconds, synced with clock time
   useEffect(() => {
@@ -261,7 +296,7 @@ export default function Clock() {
               fontWeight: '500',
               whiteSpace: 'nowrap',
               pointerEvents: 'none',
-              animation: 'fadeIn 0.2s ease-out'
+              animation: 'fadeIn 0.2s linear'
             }}
           >
             Link copied
@@ -305,7 +340,7 @@ export default function Clock() {
             fontWeight: '900',
             textTransform: 'uppercase',
             letterSpacing: '-0.3px',
-            animation: 'fadeIn 1s linear both',
+            animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0
           }}
         >
@@ -339,9 +374,7 @@ export default function Clock() {
             maxWidth: '100%',
             maxHeight: '100%',
             aspectRatio: '1',
-            overflow: 'visible',
-            animation: 'fadeIn 2.5s linear 0.3s both',
-            opacity: 0
+            overflow: 'visible'
           }}
         >
 
@@ -380,6 +413,10 @@ export default function Clock() {
                 stroke="black"
                 strokeWidth={tick.isHourMark ? 3 : 1}
                 strokeLinecap="round"
+                style={{
+                  animation: contentReady ? `fadeIn 0.3s linear ${i * 0.02}s both` : 'none',
+                  opacity: contentReady ? undefined : 0
+                }}
               />
             ))}
           </g>
@@ -397,6 +434,8 @@ export default function Clock() {
                 fontSize: '16px',
                 fontFamily: 'Satoshi, sans-serif',
                 letterSpacing: '-0.8px',
+                animation: contentReady ? `fadeIn 0.3s linear ${i * 0.1}s both` : 'none',
+                opacity: contentReady ? undefined : 0
               }}
             >
               CALL
@@ -429,7 +468,11 @@ export default function Clock() {
             y={center - radius * 0.5 - 10}
             width={pillWidth || 160}
             height="60"
-            style={{ overflow: 'visible' }}
+            style={{ 
+              overflow: 'visible',
+              animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+              opacity: contentReady ? undefined : 0
+            }}
           >
             <div
               style={{
@@ -500,7 +543,11 @@ export default function Clock() {
             y={center + radius * 0.5 - 37}
             width={160}
             height="20"
-            style={{ overflow: 'visible' }}
+            style={{ 
+              overflow: 'visible',
+              animation: contentReady ? 'fadeIn 0.3s linear 0s both' : 'none',
+              opacity: contentReady ? undefined : 0
+            }}
           >
             <div
               style={{
@@ -620,7 +667,7 @@ export default function Clock() {
             color: '#666666',
             lineHeight: '1.5',
             letterSpacing: '-0.4px',
-            animation: 'fadeIn 1s linear both',
+            animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0
           }}
         >
@@ -640,7 +687,7 @@ export default function Clock() {
             fontSize: '10px',
             fontWeight: '500',
             color: '#b3b3b3',
-            animation: 'fadeIn 1s linear both',
+            animation: contentReady ? 'fadeIn 1s linear both' : 'none',
             opacity: 0
           }}
         >
